@@ -42,7 +42,7 @@ async function rulePlanner(message: string, userId: string): Promise<string> {
         });
       }
 
-      return `I've remembered that: "${content}". This has been stored in your Memory agent.`;
+      return `On it—saved to Memory. You can recall this anytime by asking what I remember.`;
     }
   }
 
@@ -50,12 +50,12 @@ async function rulePlanner(message: string, userId: string): Promise<string> {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     
     if (user?.killSwitch) {
-      return "I cannot create files right now because the kill switch is enabled. Please disable it in the Kill Switch page.";
+      return "Paused—kill switch is on. Approvals will not run until you resume. Turn off kill switch to proceed.";
     }
 
     const codeAgent = await prisma.agent.findFirst({ where: { name: "Code" } });
     if (!codeAgent) {
-      return "Code agent is not available. Please initialize agents first.";
+      return "Blocked—Code agent not found. Initialize agents to proceed.";
     }
 
     const existingToken = await prisma.capabilityToken.findFirst({
@@ -95,26 +95,14 @@ async function rulePlanner(message: string, userId: string): Promise<string> {
       },
     });
 
-    return `I need your approval to create the file "${fileName}" in the sandbox. Please check the Approvals page to approve this action. Approval ID: ${approval.id}`;
+    return `Waiting on you—Code wants to create "${fileName}". Review draft in Approvals.`;
   }
 
-  if (lowerMessage.includes("what can you") || lowerMessage.includes("help me")) {
-    return `I'm Lead, your orchestrator agent. I can help you with:
-
-1. **Remember things**: Ask me to remember information and I'll store it in the Memory agent
-2. **Create files**: Request file creation in the sandbox (requires approval)
-3. **Coordinate agents**: I work with Memory, Code, and Guardian agents
-4. **Plan tasks**: I break down complex requests into actionable steps
-
-Try asking me to:
-- "Remember that my favorite color is blue"
-- "Create a hello.txt file in the sandbox"
-- "What's in my memory?"
-
-All sensitive operations require your approval through the Approvals page.`;
+  if (lowerMessage.includes("what can you") || lowerMessage.includes("help me") || lowerMessage.includes("status")) {
+    return `Working—checking with the team now. I co-ordinate Memory, Code, and Guardian. Ask for status, assign work, or set permissions. Sensitive actions wait for your approval.`;
   }
 
-  if (lowerMessage.includes("memory") || lowerMessage.includes("what do you remember")) {
+  if (lowerMessage.includes("memory") || lowerMessage.includes("what do you remember") || lowerMessage.includes("recall")) {
     const memories = await prisma.memory.findMany({
       where: { userId },
       orderBy: { createdAt: "desc" },
@@ -122,14 +110,14 @@ All sensitive operations require your approval through the Approvals page.`;
     });
 
     if (memories.length === 0) {
-      return "I don't have any memories stored yet. Ask me to remember something!";
+      return "Nothing stored yet. Ask me to remember something and I'll save it to Memory.";
     }
 
     const memoryList = memories.map((m, i) => `${i + 1}. ${m.value}`).join("\n");
-    return `Here's what I remember:\n\n${memoryList}`;
+    return `Done—here's what Memory has:\n\n${memoryList}`;
   }
 
-  return `I understand you said: "${message}". I'm using rule-based planning right now. I can help you remember things, create files (with approval), or coordinate agent tasks. What would you like me to do?`;
+  return `Got it: "${message}". Ask me to check status, assign work, or change permissions. Need more detail to proceed.`;
 }
 
 export async function POST(request: Request) {

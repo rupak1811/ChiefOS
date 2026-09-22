@@ -29,7 +29,7 @@ export default async function ApprovalsPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Approvals</h1>
         <p className="text-foreground/70">
-          Review and approve sensitive agent operations
+          Lead co-ordinates your agent team. Sensitive actions wait for your approval.
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export default async function ApprovalsPage() {
         <div>
           <h2 className="text-xl font-bold mb-4 flex items-center">
             <Clock className="w-5 h-5 mr-2 text-yellow-400" />
-            Pending ({pending.length})
+            Waiting on you ({pending.length})
           </h2>
           <div className="space-y-4">
             {pending.map((approval) => (
@@ -45,16 +45,13 @@ export default async function ApprovalsPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-bold">{approval.action}</h3>
+                      <h3 className="text-lg font-bold">{approval.token.agent.name} wants to {approval.action}</h3>
                       <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs">
-                        Pending
+                        Waiting on you
                       </span>
                     </div>
-                    <p className="text-sm text-foreground/70 mb-2">
-                      Agent: {approval.token.agent.name}
-                    </p>
                     <p className="text-sm text-foreground/60">
-                      {approval.metadata || "No additional details provided"}
+                      {approval.metadata || "Review draft?"}
                     </p>
                   </div>
                 </div>
@@ -74,7 +71,8 @@ export default async function ApprovalsPage() {
             ))}
             {pending.length === 0 && (
               <GlassCard className="p-8 text-center">
-                <p className="text-foreground/60">No pending approvals</p>
+                <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-400/50" />
+                <p className="text-foreground/60">Done—no approvals waiting</p>
               </GlassCard>
             )}
           </div>

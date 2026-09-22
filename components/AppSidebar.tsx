@@ -8,6 +8,7 @@ import {
   CheckSquare, 
   FileText, 
   MessageSquare,
+  HelpCircle,
   Power,
   LogOut 
 } from "lucide-react";
@@ -19,6 +20,7 @@ const navItems = [
   { href: "/app/approvals", label: "Approvals", icon: CheckSquare },
   { href: "/app/ledger", label: "Ledger", icon: FileText },
   { href: "/app/chat", label: "Chat", icon: MessageSquare },
+  { href: "/app/help", label: "Help", icon: HelpCircle },
 ];
 
 interface AppSidebarProps {

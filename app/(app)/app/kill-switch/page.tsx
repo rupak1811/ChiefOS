@@ -43,12 +43,12 @@ export default async function KillSwitchPage() {
               }`} />
             </div>
             <h2 className="text-2xl font-bold mb-2">
-              {isEnabled ? "System Disabled" : "System Active"}
+              {isEnabled ? "Paused" : "System Active"}
             </h2>
             <p className="text-foreground/70">
               {isEnabled
-                ? "All agent operations are currently blocked"
-                : "Agents are operational and can execute approved actions"}
+                ? "Kill switch is on. Approvals will not run until you resume."
+                : "Agents are operational and can execute approved actions."}
             </p>
           </div>
 

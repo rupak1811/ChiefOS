@@ -42,9 +42,9 @@ export default function ApprovalActions({ approvalId }: ApprovalActionsProps) {
       <button
         onClick={() => handleAction("reject")}
         disabled={loading}
-        className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors disabled:opacity-50"
+        className="px-4 py-2 bg-gray-500/20 text-gray-400 rounded-lg hover:bg-gray-500/30 transition-colors disabled:opacity-50"
       >
-        Reject
+        Deny
       </button>
     </div>
   );

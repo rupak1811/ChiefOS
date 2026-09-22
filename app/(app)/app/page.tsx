@@ -33,9 +33,9 @@ export default async function DashboardPage() {
         <div className="mb-6 p-4 glass-morphism border-2 border-red-500/50 rounded-xl flex items-center gap-3">
           <AlertTriangle className="w-6 h-6 text-red-400" />
           <div className="flex-1">
-            <p className="font-bold text-red-400">Kill Switch Enabled</p>
+            <p className="font-bold text-red-400">Paused</p>
             <p className="text-sm text-foreground/70">
-              All agent operations are currently disabled
+              Kill switch is on. Approvals will not run until you resume.
             </p>
           </div>
           <a

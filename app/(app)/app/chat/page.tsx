@@ -64,9 +64,9 @@ export default function ChatPage() {
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col">
       <div className="mb-4">
-        <h1 className="text-3xl font-bold mb-2">Chat with Lead</h1>
+        <h1 className="text-3xl font-bold mb-2">Talk to Lead</h1>
         <p className="text-foreground/70">
-          Your orchestrator agent for planning and coordination
+          Your orchestrator agent for planning and co-ordination
         </p>
       </div>
 
@@ -77,29 +77,28 @@ export default function ChatPage() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center mb-4">
                 <Bot className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Start a conversation</h3>
-              <p className="text-foreground/60 max-w-md">
-                Ask me to remember something, create a file in the sandbox, or
-                coordinate tasks across agents.
+              <h3 className="text-xl font-bold mb-2">Talk to Lead</h3>
+              <p className="text-foreground/60 max-w-md mb-6">
+                Lead co-ordinates your agent team. Ask for status, assign work, or set permissions. Sensitive actions wait for your approval.
               </p>
-              <div className="mt-6 space-y-2">
+              <div className="w-full max-w-md space-y-2">
+                <button
+                  onClick={() => setInput("Check status")}
+                  className="block w-full px-4 py-2 glass-morphism-light rounded-lg hover:bg-white/20 transition-colors text-sm text-left"
+                >
+                  Check status
+                </button>
                 <button
                   onClick={() => setInput("Remember that my favorite color is blue")}
                   className="block w-full px-4 py-2 glass-morphism-light rounded-lg hover:bg-white/20 transition-colors text-sm text-left"
                 >
-                  Remember my favorite color
+                  Assign work
                 </button>
                 <button
                   onClick={() => setInput("Create a hello.txt file in the sandbox")}
                   className="block w-full px-4 py-2 glass-morphism-light rounded-lg hover:bg-white/20 transition-colors text-sm text-left"
                 >
-                  Create a file in sandbox
-                </button>
-                <button
-                  onClick={() => setInput("What can you help me with?")}
-                  className="block w-full px-4 py-2 glass-morphism-light rounded-lg hover:bg-white/20 transition-colors text-sm text-left"
-                >
-                  What can you do?
+                  Set permissions
                 </button>
               </div>
             </div>
@@ -166,7 +165,7 @@ export default function ChatPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSend()}
-              placeholder="Ask Lead to coordinate your agents..."
+              placeholder="Ask Lead to check status, assign work, or change permissions…"
               className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all"
               disabled={loading}
             />
