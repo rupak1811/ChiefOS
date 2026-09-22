@@ -1,0 +1,88 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import GlassCard from "@/components/GlassCard";
+import { FileText, Filter } from "lucide-react";
+
+export default async function LedgerPage() {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
+  const entries = await prisma.actionLedger.findMany({
+    where: { userId },
+    orderBy: { timestamp: "desc" },
+    include: { agent: true },
+    take: 100,
+  });
+
+  return (
+    <div>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">Action Ledger</h1>
+        <p className="text-foreground/70">
+          Immutable audit trail of all agent operations
+        </p>
+      </div>
+
+      <GlassCard className="p-6 mb-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <FileText className="w-6 h-6 text-accent-teal" />
+            <div>
+              <p className="font-bold text-xl">{entries.length}</p>
+              <p className="text-sm text-foreground/60">Total entries logged</p>
+            </div>
+          </div>
+          <button className="flex items-center gap-2 px-4 py-2 glass-morphism-light rounded-lg hover:bg-white/20 transition-colors">
+            <Filter className="w-4 h-4" />
+            Filter
+          </button>
+        </div>
+      </GlassCard>
+
+      <div className="space-y-3">
+        {entries.map((entry) => (
+          <GlassCard key={entry.id} className="p-4">
+            <div className="flex items-start justify-between mb-2">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-1">
+                  <p className="font-medium">{entry.agent.name}</p>
+                  <span className="text-xs text-foreground/50">
+                    {new Date(entry.timestamp).toLocaleString()}
+                  </span>
+                </div>
+                <p className="text-sm text-foreground/70 mb-2">{entry.action}</p>
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-1 bg-accent-teal/10 text-accent-teal rounded text-xs font-mono">
+                    {entry.scope}
+                  </span>
+                  {entry.result && (
+                    <span className="px-2 py-1 bg-green-500/10 text-green-400 rounded text-xs">
+                      Success
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            {entry.metadata && (
+              <div className="mt-3 pt-3 border-t border-white/10">
+                <p className="text-xs text-foreground/50 font-mono">
+                  {entry.metadata}
+                </p>
+              </div>
+            )}
+          </GlassCard>
+        ))}
+
+        {entries.length === 0 && (
+          <GlassCard className="p-12 text-center">
+            <FileText className="w-12 h-12 mx-auto mb-4 text-foreground/30" />
+            <p className="text-foreground/60">
+              No actions logged yet. Agent operations will appear here.
+            </p>
+          </GlassCard>
+        )}
+      </div>
+    </div>
+  );
+}
