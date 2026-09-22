@@ -40,5 +40,6 @@ next-env.d.ts
 /prisma/*.db
 /prisma/*.db-journal
 
-# sandbox
-/sandbox/
+# sandbox (keep structure, ignore user contents)
+/sandbox/*
+!/sandbox/.gitkeep

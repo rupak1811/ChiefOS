@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import * as fs from "fs/promises";
-import * as path from "path";
+import { writeSandboxFile } from "@/lib/sandbox";
 
 /**
  * Approvals API - Execute approved actions
@@ -80,19 +79,16 @@ export async function POST(request: Request) {
         
         // Execute based on scope
         if (approval.scope === "code:write" && metadata.fileName) {
-          // TODO: Replace with lib/sandbox helpers when available from Any Dev
-          // For now, simple implementation that writes to local sandbox
-          const sandboxDir = path.join(process.cwd(), "sandbox", session.user.id);
-          await fs.mkdir(sandboxDir, { recursive: true });
+          const writeResult = await writeSandboxFile(
+            metadata.fileName, 
+            metadata.content || "",
+            session.user.id
+          );
           
-          const filePath = path.join(sandboxDir, path.basename(metadata.fileName));
-          await fs.writeFile(filePath, metadata.content || "");
-          
-          executionResult = "success";
+          executionResult = writeResult.success ? "success" : "failed";
           executionMetadata = {
             fileName: metadata.fileName,
-            sandboxPath: filePath,
-            fileSize: (metadata.content || "").length,
+            writeResult,
           };
         } else {
           executionResult = "success";

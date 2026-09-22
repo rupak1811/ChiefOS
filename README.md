@@ -390,9 +390,20 @@ npx prisma studio
 ### Docker
 
 \`\`\`bash
+# Build the image
 docker build -t chiefos .
-docker run -p 3000:3000 --env-file .env chiefos
+
+# Run the container
+docker run -p 3000:3000 \
+  -e DATABASE_URL="file:./dev.db" \
+  -e NEXTAUTH_URL="http://localhost:3000" \
+  -e NEXTAUTH_SECRET="your-secret-here" \
+  -e GOOGLE_CLIENT_ID="your-google-client-id" \
+  -e GOOGLE_CLIENT_SECRET="your-google-client-secret" \
+  chiefos
 \`\`\`
+
+**Note**: The Dockerfile uses Next.js \`standalone\` output mode for optimized production builds. Ensure your environment variables are configured before deploying. For production, use a proper database URL instead of SQLite.
 
 ## Security Considerations
 
