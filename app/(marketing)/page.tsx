@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { signIn } from "next-auth/react";
 import Button from "@/components/Button";
 import GlassCard from "@/components/GlassCard";
 import ImageCarousel from "@/components/ImageCarousel";
@@ -29,8 +30,12 @@ export default function HomePage() {
               ChiefOS co-ordinates specialised agents under clear roles and approvals. You set the brief; they execute within the guardrails you define.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button href="/contact" variant="primary" size="lg">
-                Book a walkthrough
+              <Button 
+                onClick={() => signIn("google", { callbackUrl: "/app" })} 
+                variant="primary" 
+                size="lg"
+              >
+                Get Started
               </Button>
               <Button href="/how-we-work" variant="secondary" size="lg">
                 See how it works
@@ -164,10 +169,14 @@ export default function HomePage() {
               Ready to get started?
             </h2>
             <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
-              Book a walkthrough to see how ChiefOS co-ordinates your agent workforce.
+              Sign in with Google to start co-ordinating your agent workforce with ChiefOS.
             </p>
-            <Button href="/contact" variant="primary" size="lg">
-              Book a walkthrough
+            <Button 
+              onClick={() => signIn("google", { callbackUrl: "/app" })} 
+              variant="primary" 
+              size="lg"
+            >
+              Get Started
             </Button>
           </motion.div>
         </section>

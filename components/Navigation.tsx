@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Logo from "./Logo";
 
 const navLinks = [
@@ -18,6 +19,7 @@ const navLinks = [
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 water-glass water-glass--heavy border-b border-white/10">
@@ -32,23 +34,56 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg relative overflow-hidden text-nav ${
-                  pathname === link.href
-                    ? "bg-white/10 text-foreground"
-                    : "text-ink-muted hover:text-foreground hover:bg-white/5"
-                }`}
-                style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
+                className="px-4 py-2 rounded-lg relative text-nav"
+                style={{ transition: "color 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
+                onMouseEnter={() => setHoveredLink(link.href)}
+                onMouseLeave={() => setHoveredLink(null)}
               >
-                {link.label}
+                <span className={`relative z-10 ${
+                  pathname === link.href
+                    ? "text-foreground"
+                    : "text-ink-muted hover:text-foreground"
+                }`}>
+                  {link.label}
+                </span>
+                {pathname === link.href && (
+                  <motion.div
+                    layoutId="navIndicator"
+                    className="absolute inset-0 bg-white/10 rounded-lg water-glass"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 30,
+                      mass: 0.8,
+                    }}
+                  />
+                )}
+                {hoveredLink === link.href && pathname !== link.href && (
+                  <motion.div
+                    layoutId="navHover"
+                    className="absolute inset-0 bg-white/5 rounded-lg"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 30,
+                      mass: 0.8,
+                    }}
+                    style={{
+                      background: "radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)",
+                    }}
+                  />
+                )}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-white hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98]"
+            <button
+              onClick={() => signIn("google", { callbackUrl: "/app" })}
+              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98] font-medium"
               style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
             >
-              Contact
-            </Link>
+              Get Started
+            </button>
           </div>
 
           <button
@@ -83,13 +118,15 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="block px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-white"
-              onClick={() => setMobileMenuOpen(false)}
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                signIn("google", { callbackUrl: "/app" });
+              }}
+              className="w-full px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] font-medium"
             >
-              Contact
-            </Link>
+              Get Started
+            </button>
           </div>
         </motion.div>
       )}
