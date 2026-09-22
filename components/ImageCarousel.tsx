@@ -5,16 +5,16 @@ import { useState, useEffect } from "react";
 
 const images = [
   {
-    url: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop",
-    alt: "AI Agent Interface",
+    url: "/heroes/hero-01-multi-agent-os.png",
+    alt: "Multi-agent OS that stays under your control",
   },
   {
-    url: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=800&fit=crop",
-    alt: "Modern Dashboard",
+    url: "/heroes/hero-02-permissions.png",
+    alt: "Permissions before every consequential action",
   },
   {
-    url: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=800&fit=crop",
-    alt: "Automation Workflow",
+    url: "/heroes/hero-03-approval-trust.png",
+    alt: "Approval and trust built into the loop",
   },
 ];
 

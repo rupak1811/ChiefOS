@@ -7,6 +7,7 @@ import { Brain, Database, Code2, Shield } from "lucide-react";
 const services = [
   {
     icon: Brain,
+    image: "/cards/card-01-orchestration.png",
     title: "Multi-agent operations",
     description: "Stand up specialist agents for mail, chat, code, design, and ops. Each works in its lane; Lead keeps the thread.",
     capabilities: [
@@ -19,6 +20,7 @@ const services = [
   },
   {
     icon: Shield,
+    image: "/cards/card-02-permissions.png",
     title: "Permissioned control",
     description: "Approvals before send, deploy, or spend. Agents draft and prepare; you decide what leaves the building.",
     capabilities: [
@@ -31,6 +33,7 @@ const services = [
   },
   {
     icon: Code2,
+    image: "/cards/card-03-approval.png",
     title: "Liquid-glass marketing site",
     description: "A polished public face for ChiefOS: clear offers, fast contact, and copy that matches how the product actually runs.",
     capabilities: [
@@ -43,6 +46,7 @@ const services = [
   },
   {
     icon: Database,
+    image: "/cards/card-04-trust.png",
     title: "Custom agent desks",
     description: "Need a desk for a new workflow? We shape role, tools, and hand-offs so it fits your stack without noise.",
     capabilities: [
@@ -78,44 +82,56 @@ export default function ServicesPage() {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <GlassCard key={index} hover className="p-8">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-7 h-7 text-white" />
+              <GlassCard key={index} hover className="p-0 overflow-hidden">
+                {service.image && (
+                  <div className="relative h-64 w-full overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-base via-base/50 to-transparent" />
                   </div>
+                )}
+                <div className="p-8">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
+                      <p className="text-ink-muted">{service.description}</p>
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <h4 className="font-semibold mb-3 text-accent">
+                      Capabilities
+                    </h4>
+                    <ul className="space-y-2">
+                      {service.capabilities.map((capability, i) => (
+                        <li key={i} className="flex items-start text-sm">
+                          <span className="text-accent mr-2">•</span>
+                          <span className="text-ink-muted">{capability}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
                   <div>
-                    <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                    <p className="text-foreground/70">{service.description}</p>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h4 className="font-semibold mb-3 text-accent-teal">
-                    Capabilities
-                  </h4>
-                  <ul className="space-y-2">
-                    {service.capabilities.map((capability, i) => (
-                      <li key={i} className="flex items-start text-sm">
-                        <span className="text-accent-blue mr-2">•</span>
-                        <span className="text-foreground/80">{capability}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold mb-3 text-accent-blue">
-                    Permission Scopes
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {service.scopes.map((scope, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono"
-                      >
-                        {scope}
-                      </span>
-                    ))}
+                    <h4 className="font-semibold mb-3 text-accent">
+                      Permission Scopes
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {service.scopes.map((scope, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 glass border-glass-border rounded-lg text-xs font-mono"
+                        >
+                          {scope}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </GlassCard>
