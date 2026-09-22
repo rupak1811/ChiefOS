@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
+
 interface LogoProps {
   size?: "nav" | "footer" | "hero";
   showText?: boolean;
   variant?: "primary" | "mono-light" | "mono-dark" | "teal-flat";
+  usePNG?: boolean; // Use production PNG logo instead of SVG
   className?: string;
 }
 
@@ -11,16 +14,33 @@ export default function Logo({
   size = "nav", 
   showText = true, 
   variant = "primary",
+  usePNG = false,
   className = "" 
 }: LogoProps) {
   // Size mappings
   const sizeMap = {
-    nav: { mark: 36, wordmark: "text-logo-sm" },
-    footer: { mark: 28, wordmark: "text-logo-sm" },
-    hero: { mark: 72, wordmark: "text-logo-lg" },
+    nav: { mark: 36, wordmark: "text-logo-sm", pngHeight: 40 },
+    footer: { mark: 28, wordmark: "text-logo-sm", pngHeight: 32 },
+    hero: { mark: 72, wordmark: "text-logo-lg", pngHeight: 80 },
   };
 
-  const { mark, wordmark } = sizeMap[size];
+  const { mark, wordmark, pngHeight } = sizeMap[size];
+  
+  // Use production PNG logo for nav/footer when usePNG is true
+  if (usePNG && showText && (size === "nav" || size === "footer")) {
+    return (
+      <div className={`relative ${className}`} style={{ height: `${pngHeight}px` }}>
+        <Image
+          src="/brand/logo-nav-480.png"
+          alt="ChiefOS"
+          width={480}
+          height={134}
+          className="h-full w-auto"
+          priority={size === "nav"}
+        />
+      </div>
+    );
+  }
 
   // Color variants
   const colors = {
@@ -60,7 +80,7 @@ export default function Logo({
           <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#2DD4BF" />
             <stop offset="55%" stopColor="#22D3EE" />
-            <stop offset="100%" stopColor="#818CF8" />
+            <stop offset="100%" stopColor="#22D3EE" />
           </linearGradient>
           
           {/* Subtle inner glow */}

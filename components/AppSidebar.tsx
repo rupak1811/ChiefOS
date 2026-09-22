@@ -39,7 +39,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
     <aside className="w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col">
       <div className="p-6">
         <Link href="/app" className="flex items-center">
-          <Logo size="nav" showText={true} />
+          <Logo size="nav" showText={true} usePNG={true} />
         </Link>
       </div>
 

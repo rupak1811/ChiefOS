@@ -30,8 +30,11 @@ export const metadata: Metadata = {
   title: "ChiefOS - Permissioned Multi-Agent Operating System",
   description: "Professional multi-agent OS with liquid-glass design, capability tokens, and human oversight",
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 
