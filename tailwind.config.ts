@@ -9,20 +9,54 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        base: "var(--bg-base)",
+        elevated: "var(--bg-elevated)",
+        sunken: "var(--bg-sunken)",
+        panel: "var(--bg-panel)",
         glass: {
-          light: "rgba(255, 255, 255, 0.1)",
-          medium: "rgba(255, 255, 255, 0.15)",
-          dark: "rgba(0, 0, 0, 0.3)",
+          DEFAULT: "var(--glass-fill)",
+          strong: "var(--glass-fill-strong)",
+          border: "var(--glass-border)",
+        },
+        ink: {
+          DEFAULT: "var(--text-primary)",
+          muted: "var(--text-secondary)",
+          faint: "var(--text-tertiary)",
         },
         accent: {
-          teal: "#14b8a6",
-          blue: "#3b82f6",
+          DEFAULT: "var(--accent)",
+          soft: "var(--accent-soft)",
+          hover: "var(--accent-hover)",
+          pressed: "var(--accent-pressed)",
+          teal: "var(--accent)",
+          blue: "#60A5FA",
         },
+        success: "var(--success)",
+        warning: "var(--warning)",
+        danger: "var(--danger)",
+        info: "var(--info)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+      borderRadius: {
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+        pill: "var(--radius-pill)",
+      },
+      boxShadow: {
+        glass: "var(--shadow-glass)",
+        float: "var(--shadow-float)",
+        accent: "var(--shadow-accent)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
       },
       backdropBlur: {
-        xs: "2px",
+        glass: "24px",
+        heavy: "40px",
       },
       animation: {
         "float": "float 6s ease-in-out infinite",
@@ -42,6 +76,15 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+      },
+      transitionTimingFunction: {
+        'ease-out': 'var(--ease-out)',
+        'ease-in-out': 'var(--ease-in-out)',
+      },
+      transitionDuration: {
+        'fast': 'var(--dur-fast)',
+        'med': 'var(--dur-med)',
+        'slow': 'var(--dur-slow)',
       },
     },
   },

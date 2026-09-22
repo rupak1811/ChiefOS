@@ -117,14 +117,17 @@ model Approval {
 }
 
 model ActionLedger {
-  id        String   @id @default(cuid())
-  userId    String
-  agentId   String
-  action    String
-  scope     String
-  metadata  String?
-  result    String?
-  timestamp DateTime @default(now())
+  id              String   @id @default(cuid())
+  userId          String
+  agentId         String
+  action          String
+  scope           String
+  metadata        String?
+  result          String?
+  timestamp       DateTime @default(now())
+  delegationChain String?  @default("[]")
+  toolArgsHash    String?
+  hitl            Boolean  @default(false)
   
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
