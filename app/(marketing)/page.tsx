@@ -22,20 +22,17 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Your Agents,
-              <br />
-              <span className="text-gradient">Under Your Control</span>
+              <span className="text-gradient">Run a permissioned agent workforce from one desk.</span>
             </h1>
             <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto mb-8">
-              ChiefOS is a professional multi-agent operating system with permissioned
-              capabilities, human oversight, and liquid-glass design.
+              ChiefOS co-ordinates specialised agents under clear roles and approvals. You set the brief; they execute within the guardrails you define.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button href="/services" variant="primary" size="lg">
-                Explore Services
+              <Button href="/contact" variant="primary" size="lg">
+                Book a walkthrough
               </Button>
-              <Button href="/api/auth/signin" variant="secondary" size="lg">
-                Get Started
+              <Button href="/how-we-work" variant="secondary" size="lg">
+                See how it works
               </Button>
             </div>
           </motion.div>
@@ -60,10 +57,9 @@ export default function HomePage() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center mb-4">
                   <Sparkles className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Intelligent Agents</h3>
+                <h3 className="text-xl font-bold mb-2">Multi-agent operations</h3>
                 <p className="text-foreground/70">
-                  Lead, Memory, Code, and Guardian agents work together to execute
-                  your tasks with precision.
+                  Stand up specialist agents for mail, chat, code, design, and ops. Each works in its lane; Lead keeps the thread.
                 </p>
               </div>
             </GlassCard>
@@ -73,10 +69,9 @@ export default function HomePage() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center mb-4">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Permission Control</h3>
+                <h3 className="text-xl font-bold mb-2">Permissioned control</h3>
                 <p className="text-foreground/70">
-                  Every action requires your approval. Capability tokens with scopes
-                  and expiry ensure safety.
+                  Approvals before send, deploy, or spend. Agents draft and prepare; you decide what leaves the building.
                 </p>
               </div>
             </GlassCard>
@@ -86,10 +81,9 @@ export default function HomePage() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center mb-4">
                   <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Transparent Ledger</h3>
+                <h3 className="text-xl font-bold mb-2">Liquid-glass marketing site</h3>
                 <p className="text-foreground/70">
-                  Append-only action ledger tracks every operation. Full visibility
-                  and audit trail.
+                  A polished public face for ChiefOS: clear offers, fast contact, and copy that matches how the product actually runs.
                 </p>
               </div>
             </GlassCard>
@@ -105,12 +99,10 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Built for Professionals
+                Custom agent desks
               </h2>
               <p className="text-foreground/70 mb-8">
-                ChiefOS gives you the power of autonomous agents with the safety
-                of human oversight. Every capability is scoped, every action is
-                logged, and you're always in control.
+                Need a desk for a new workflow? We shape role, tools, and hand-offs so it fits your stack without noise.
               </p>
               <ul className="space-y-4">
                 {[
@@ -171,11 +163,10 @@ export default function HomePage() {
               Ready to get started?
             </h2>
             <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
-              Sign in with Google and start managing your agent fleet with
-              ChiefOS today.
+              Book a walkthrough to see how ChiefOS co-ordinates your agent workforce.
             </p>
-            <Button href="/api/auth/signin" variant="primary" size="lg">
-              Sign In with Google
+            <Button href="/contact" variant="primary" size="lg">
+              Book a walkthrough
             </Button>
           </motion.div>
         </section>

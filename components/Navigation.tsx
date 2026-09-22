@@ -8,9 +8,9 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/work", label: "Work" },
-  { href: "/how-we-work", label: "Process" },
   { href: "/services", label: "Services" },
+  { href: "/how-we-work", label: "How it works" },
+  { href: "/work", label: "Work" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -44,10 +44,10 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              href="/api/auth/signin"
+              href="/contact"
               className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent-teal to-accent-blue text-white hover:shadow-lg hover:shadow-accent-teal/50 transition-all"
             >
-              Sign In
+              Contact
             </Link>
           </div>
 
@@ -83,11 +83,11 @@ export default function Navigation() {
               </Link>
             ))}
             <Link
-              href="/api/auth/signin"
+              href="/contact"
               className="block px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent-teal to-accent-blue text-white"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Sign In
+              Contact
             </Link>
           </div>
         </motion.div>

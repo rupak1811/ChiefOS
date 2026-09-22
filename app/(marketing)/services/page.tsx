@@ -7,51 +7,51 @@ import { Brain, Database, Code2, Shield } from "lucide-react";
 const services = [
   {
     icon: Brain,
-    title: "Lead Agent",
-    description: "The orchestrator of your agent fleet. Lead understands your goals, creates plans, and delegates tasks to specialist agents.",
+    title: "Multi-agent operations",
+    description: "Stand up specialist agents for mail, chat, code, design, and ops. Each works in its lane; Lead keeps the thread.",
     capabilities: [
       "Natural language task understanding",
-      "Multi-step planning and coordination",
+      "Multi-step planning and co-ordination",
       "Rule-based execution (no API key required)",
       "Optional LLM integration for advanced reasoning",
     ],
     scopes: ["plan:create", "task:delegate", "agent:coordinate"],
   },
   {
-    icon: Database,
-    title: "Memory Agent",
-    description: "Persistent knowledge store for your organization. Remembers preferences, context, and learned information across sessions.",
+    icon: Shield,
+    title: "Permissioned control",
+    description: "Approvals before send, deploy, or spend. Agents draft and prepare; you decide what leaves the building.",
     capabilities: [
-      "Key-value memory storage",
-      "Context retrieval for other agents",
-      "User preference management",
-      "Cross-session persistence",
+      "Approval queue for sensitive operations",
+      "Capability tokens with scoped permissions",
+      "Time-bound expiry for all tokens",
+      "Granular control over agent actions",
     ],
-    scopes: ["memory:read", "memory:write"],
+    scopes: ["approval:required", "token:validate", "permission:enforce"],
   },
   {
     icon: Code2,
-    title: "Code Agent",
-    description: "Sandboxed code execution and file operations. Writes, runs, and manages code with your explicit approval for sensitive changes.",
+    title: "Liquid-glass marketing site",
+    description: "A polished public face for ChiefOS: clear offers, fast contact, and copy that matches how the product actually runs.",
     capabilities: [
-      "Sandboxed file system operations",
-      "Code generation and execution",
-      "Git integration and version control",
-      "Approval-gated write operations",
+      "iOS-inspired frosted glass design",
+      "Smooth spring animations",
+      "Mobile responsive layout",
+      "Professional brand presentation",
     ],
-    scopes: ["code:read", "code:write", "sandbox:execute"],
+    scopes: ["public:read", "contact:submit", "marketing:view"],
   },
   {
-    icon: Shield,
-    title: "Guardian Agent",
-    description: "Security monitor that validates all operations, enforces policies, and maintains the action ledger for complete transparency.",
+    icon: Database,
+    title: "Custom agent desks",
+    description: "Need a desk for a new workflow? We shape role, tools, and hand-offs so it fits your stack without noise.",
     capabilities: [
-      "Permission scope validation",
-      "Security policy enforcement",
-      "Action ledger management",
-      "Anomaly detection and alerting",
+      "Bespoke agent configuration",
+      "Custom tool integration",
+      "Workflow-specific permissions",
+      "Tailored to your stack",
     ],
-    scopes: ["security:validate", "ledger:write", "policy:enforce"],
+    scopes: ["custom:configure", "desk:create", "workflow:integrate"],
   },
 ];
 
@@ -66,10 +66,10 @@ export default function ServicesPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Our <span className="text-gradient">Services</span>
+            <span className="text-gradient">Services</span>
           </h1>
           <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
-            A specialized fleet of intelligent agents, each with defined
+            A specialised fleet of intelligent agents, each with defined
             capabilities and strict permission boundaries.
           </p>
         </motion.div>
@@ -133,7 +133,7 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div>
                 <h2 className="text-3xl font-bold mb-4">
-                  Enterprise-Grade Security
+                  Enterprise-grade security
                 </h2>
                 <p className="text-foreground/70 mb-6">
                   Every agent operation flows through our permission system.
@@ -145,7 +145,7 @@ export default function ServicesPage() {
                   href="/how-we-work"
                   className="text-accent-teal hover:text-accent-blue transition-colors"
                 >
-                  Learn about our process →
+                  See how it works →
                 </a>
               </div>
               <div className="space-y-3">

@@ -7,33 +7,27 @@ import { Search, FileText, Cpu, CheckSquare, Rocket } from "lucide-react";
 const steps = [
   {
     icon: Search,
-    title: "Discover",
-    description: "We start by understanding your needs, workflows, and pain points. Our team analyzes your current processes to identify automation opportunities.",
+    title: "Scope the desks",
+    description: "Map jobs that need an agent and approvals that must stay human.",
     color: "from-blue-500 to-cyan-500",
   },
   {
     icon: FileText,
-    title: "Plan",
-    description: "Together, we design a custom agent configuration with clearly defined capabilities, permissions, and approval workflows tailored to your requirements.",
+    title: "Wire roles and tools",
+    description: "Clear brief, right connectors, hard limits on solo actions.",
     color: "from-cyan-500 to-teal-500",
   },
   {
     icon: Cpu,
-    title: "Agents Execute",
-    description: "Our specialized agents (Lead, Memory, Code, Guardian) work autonomously within their permitted scopes, requesting approvals for sensitive operations.",
+    title: "Run under Lead",
+    description: "Lead co-ordinates hand-offs, flags blockers, keeps delivery moving.",
     color: "from-teal-500 to-green-500",
   },
   {
     icon: CheckSquare,
-    title: "You Approve",
-    description: "Critical actions flow through your approval queue. You maintain full control with clear visibility into what each agent wants to do and why.",
+    title: "Tighten from real traffic",
+    description: "Refine prompts, routines, and copy from live work.",
     color: "from-green-500 to-emerald-500",
-  },
-  {
-    icon: Rocket,
-    title: "Ship",
-    description: "Once approved, agents execute immediately. Every action is logged in an immutable ledger, providing complete audit trails and transparency.",
-    color: "from-emerald-500 to-blue-500",
   },
 ];
 
@@ -48,7 +42,7 @@ export default function HowWeWorkPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            How We <span className="text-gradient">Work</span>
+            How it <span className="text-gradient">works</span>
           </h1>
           <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
             Our proven process ensures safe, effective agent deployment with

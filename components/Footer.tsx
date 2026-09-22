@@ -13,8 +13,7 @@ export default function Footer() {
               <span className="text-xl font-bold text-gradient">ChiefOS</span>
             </div>
             <p className="text-foreground/60 max-w-md">
-              A professional multi-agent operating system with permissioned capabilities,
-              human oversight, and liquid-glass design.
+              ChiefOS co-ordinates specialised agents under clear roles and approvals. You set the brief; they execute within the guardrails you define.
             </p>
           </div>
 

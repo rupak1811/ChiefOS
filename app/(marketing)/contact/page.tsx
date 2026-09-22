@@ -46,11 +46,10 @@ export default function ContactPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Get in <span className="text-gradient">Touch</span>
+            <span className="text-gradient">Talk to us</span>
           </h1>
           <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
-            Ready to transform your operations with ChiefOS? Send us a message
-            and we'll get back to you within 24 hours.
+            Tell us what you need built or co-ordinated. We reply within one business day.
           </p>
         </motion.div>
 
@@ -84,7 +83,7 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-2">
-                Name *
+                Name
               </label>
               <input
                 type="text"
@@ -93,13 +92,13 @@ export default function ContactPage() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all"
-                placeholder="John Doe"
+                placeholder=""
               />
             </div>
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email *
+                Work email
               </label>
               <input
                 type="email"
@@ -108,13 +107,13 @@ export default function ContactPage() {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all"
-                placeholder="john@company.com"
+                placeholder=""
               />
             </div>
 
             <div>
               <label htmlFor="company" className="block text-sm font-medium mb-2">
-                Company
+                Company <span className="text-foreground/50">(optional)</span>
               </label>
               <input
                 type="text"
@@ -122,13 +121,13 @@ export default function ContactPage() {
                 value={formData.company}
                 onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all"
-                placeholder="Acme Inc."
+                placeholder=""
               />
             </div>
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message *
+                What do you need help with?
               </label>
               <textarea
                 id="message"
@@ -137,19 +136,19 @@ export default function ContactPage() {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all resize-none"
-                placeholder="Tell us about your project..."
+                placeholder="e.g. Multi-agent setup for product ops, or a marketing site for our agent stack"
               />
             </div>
 
             {status === "success" && (
               <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm">
-                Thanks for reaching out! We'll get back to you within 24 hours.
+                Message received. We'll be in touch shortly.
               </div>
             )}
 
             {status === "error" && (
               <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
-                Something went wrong. Please try again or email us directly.
+                Something went wrong. Try again, or email us directly.
               </div>
             )}
 
@@ -158,7 +157,7 @@ export default function ContactPage() {
               disabled={status === "loading"}
               className="w-full px-8 py-4 bg-gradient-to-r from-accent-teal to-accent-blue text-white rounded-xl hover:shadow-lg hover:shadow-accent-teal/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
-              {status === "loading" ? "Sending..." : "Send Message"}
+              {status === "loading" ? "Sending..." : "Send message"}
             </button>
           </form>
         </GlassCard>
