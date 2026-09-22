@@ -2,22 +2,31 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { MOTION, colorStyle } from "@/lib/motion";
+import { useRipple } from "@/components/motion/Ripple";
+import LiquidPill from "@/components/motion/LiquidPill";
 import Logo from "./Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/how-we-work", label: "How it works" },
   { href: "/work", label: "Work" },
+  { href: "/how-we-work", label: "How we work" },
+  { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
 
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const spawnRipple = useRipple();
+
+  const liquidTarget = hoveredLink || pathname;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 water-glass water-glass--heavy border-b border-white/10">
@@ -27,28 +36,39 @@ export default function Navigation() {
             <Logo size="nav" showText={true} usePNG={true} />
           </Link>
 
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1 relative">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg relative overflow-hidden text-nav ${
-                  pathname === link.href
-                    ? "bg-white/10 text-foreground"
-                    : "text-ink-muted hover:text-foreground hover:bg-white/5"
-                }`}
-                style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
+                className="px-4 py-2 rounded-full relative text-nav"
+                style={colorStyle}
+                onMouseEnter={() => setHoveredLink(link.href)}
+                onMouseLeave={() => setHoveredLink(null)}
               >
-                {link.label}
+                <span className={`relative z-10 ${
+                  pathname === link.href || hoveredLink === link.href
+                    ? "text-foreground"
+                    : "text-ink-muted"
+                }`}>
+                  {link.label}
+                </span>
+                {liquidTarget === link.href && (
+                  <LiquidPill layoutId="nav-liquid" variant="nav" />
+                )}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-white hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98]"
-              style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
+            <button
+              onClick={() => signIn("google", { callbackUrl: "/app" })}
+              onPointerDown={spawnRipple}
+              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] font-semibold relative overflow-hidden transition-all"
+              style={{
+                transitionDuration: `${MOTION.duration.hover}ms`,
+                transitionTimingFunction: MOTION.easing.fluidCubic,
+              }}
             >
-              Contact
-            </Link>
+              <span className="relative z-10">Get Started</span>
+            </button>
           </div>
 
           <button
@@ -61,13 +81,7 @@ export default function Navigation() {
       </div>
 
       {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
-          className="md:hidden water-glass water-glass--heavy border-t border-white/10"
-        >
+        <div className="md:hidden water-glass water-glass--heavy border-t border-white/10">
           <div className="px-4 py-4 space-y-2">
             {navLinks.map((link) => (
               <Link
@@ -83,15 +97,21 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="block px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-white"
-              onClick={() => setMobileMenuOpen(false)}
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                signIn("google", { callbackUrl: "/app" });
+              }}
+              onPointerDown={spawnRipple}
+              className="w-full px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] font-semibold relative overflow-hidden active:scale-[0.98] transition-transform"
+              style={{
+                transitionDuration: `${MOTION.duration.press}ms`,
+              }}
             >
-              Contact
-            </Link>
+              <span className="relative z-10">Get Started</span>
+            </button>
           </div>
-        </motion.div>
+        </div>
       )}
     </nav>
   );

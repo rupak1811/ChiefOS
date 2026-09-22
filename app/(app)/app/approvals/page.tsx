@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import GlassCard from "@/components/GlassCard";
+import Reveal from "@/components/motion/Reveal";
 import ApprovalActions from "@/components/ApprovalActions";
 import { Clock, CheckCircle, XCircle } from "lucide-react";
 
@@ -26,22 +27,27 @@ export default async function ApprovalsPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Approvals</h1>
-        <p className="text-foreground/70">
-          Lead co-ordinates your agent team. Sensitive actions wait for your approval.
-        </p>
-      </div>
+      <Reveal>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Approvals</h1>
+          <p className="text-foreground/70">
+            Lead co-ordinates your agent team. Sensitive actions wait for your approval.
+          </p>
+        </div>
+      </Reveal>
 
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-bold mb-4 flex items-center">
-            <Clock className="w-5 h-5 mr-2 text-yellow-400" />
-            Waiting on you ({pending.length})
-          </h2>
+          <Reveal delay={0.1}>
+            <h2 className="text-xl font-bold mb-4 flex items-center">
+              <Clock className="w-5 h-5 mr-2 text-yellow-400" />
+              Waiting on you ({pending.length})
+            </h2>
+          </Reveal>
           <div className="space-y-4">
-            {pending.map((approval) => (
-              <GlassCard key={approval.id} className="p-6">
+            {pending.map((approval, index) => (
+              <Reveal key={approval.id} delay={0.15} index={index} stagger={60}>
+                <GlassCard className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
@@ -67,22 +73,28 @@ export default async function ApprovalsPage() {
                   </div>
                   <ApprovalActions approvalId={approval.id} />
                 </div>
-              </GlassCard>
+                </GlassCard>
+              </Reveal>
             ))}
             {pending.length === 0 && (
-              <GlassCard className="p-8 text-center">
+              <Reveal delay={0.15}>
+                <GlassCard className="p-8 text-center">
                 <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-400/50" />
                 <p className="text-foreground/60">Done—no approvals waiting</p>
-              </GlassCard>
+                </GlassCard>
+              </Reveal>
             )}
           </div>
         </div>
 
         <div>
-          <h2 className="text-xl font-bold mb-4">Recent History</h2>
+          <Reveal delay={0.2}>
+            <h2 className="text-xl font-bold mb-4">Recent History</h2>
+          </Reveal>
           <div className="space-y-3">
-            {resolved.slice(0, 10).map((approval) => (
-              <GlassCard key={approval.id} className="p-4">
+            {resolved.slice(0, 10).map((approval, index) => (
+              <Reveal key={approval.id} delay={0.25} index={index} stagger={50}>
+                <GlassCard className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
@@ -107,7 +119,8 @@ export default async function ApprovalsPage() {
                     <XCircle className="w-5 h-5 text-red-400" />
                   )}
                 </div>
-              </GlassCard>
+                </GlassCard>
+              </Reveal>
             ))}
           </div>
         </div>

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
-import { useRipple } from "@/lib/useRipple";
+import { useRipple } from "@/components/motion/Ripple";
+import { cardAnimation, MOTION } from "@/lib/motion";
 
 interface GlassCardProps {
   children: ReactNode;
@@ -27,22 +28,21 @@ export default function GlassCard({
   
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ 
-        duration: 0.6, 
-        ease: [0.22, 1, 0.36, 1] 
-      }}
+      {...cardAnimation}
       className={`${baseClass} p-6 ${
         shimmer ? "card-shimmer" : ""
+      } ${interactive ? "relative overflow-hidden cursor-pointer" : ""} ${
+        hover ? "hover:-translate-y-0.5 hover:scale-[1.005] transition-all" : ""
       } ${className}`}
       onPointerDown={interactive ? spawnRipple : undefined}
-      style={{
-        transition: hover 
-          ? "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" 
+      style={
+        hover
+          ? {
+              transitionDuration: `${MOTION.duration.hover}ms`,
+              transitionTimingFunction: MOTION.easing.fluidCubic,
+            }
           : undefined
-      }}
+      }
     >
       {children}
     </motion.div>

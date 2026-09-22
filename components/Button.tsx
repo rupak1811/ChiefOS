@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { useRipple } from "@/lib/useRipple";
+import { useRipple } from "@/components/motion/Ripple";
+import { MOTION } from "@/lib/motion";
 
 interface ButtonProps {
   children: ReactNode;
@@ -26,12 +26,13 @@ export default function Button({
 }: ButtonProps) {
   const spawnRipple = useRipple();
   
-  const baseStyles = "inline-flex items-center justify-center text-button rounded-xl relative overflow-hidden";
+  const baseStyles = "inline-flex items-center justify-center text-button rounded-xl relative overflow-hidden transition-all";
   
+  // Per GLOBAL_WATER_MOTION: hover lift + press scale + ripple
   const variantStyles = {
-    primary: "bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98]",
-    secondary: "water-glass text-foreground hover:border-white/30 active:scale-[0.985]",
-    ghost: "text-foreground hover:bg-white/10 active:bg-white/15",
+    primary: "bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98]",
+    secondary: "water-glass text-foreground hover:border-white/30 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98]",
+    ghost: "text-foreground hover:bg-white/10 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] active:bg-white/15",
   };
   
   const sizeStyles = {
@@ -43,18 +44,20 @@ export default function Button({
   const styles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${
     disabled ? "opacity-50 cursor-not-allowed" : ""
   } ${className}`;
-  
+
   const transitionStyle = {
-    transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)",
+    transitionProperty: "transform, box-shadow, background-color, border-color",
+    transitionDuration: `${MOTION.duration.hover}ms, ${MOTION.duration.hover}ms, ${MOTION.duration.hover}ms, ${MOTION.duration.hover}ms`,
+    transitionTimingFunction: MOTION.easing.fluidCubic,
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    if ((variant === "secondary" || variant === "ghost") && !disabled) {
+    if (!disabled) {
       spawnRipple(e as any);
     }
   };
 
-  const content = <span>{children}</span>;
+  const content = <span className="relative z-10">{children}</span>;
 
   if (href && !disabled) {
     return (
