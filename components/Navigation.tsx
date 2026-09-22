@@ -24,7 +24,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center">
-            <Logo size="md" showText={true} />
+            <Logo size="nav" showText={true} />
           </Link>
 
           <div className="hidden md:flex items-center space-x-1">
@@ -32,10 +32,10 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg relative overflow-hidden ${
+                className={`px-4 py-2 rounded-lg relative overflow-hidden text-nav ${
                   pathname === link.href
-                    ? "bg-white/10 text-accent"
-                    : "text-foreground/70 hover:text-foreground hover:bg-white/5"
+                    ? "bg-white/10 text-foreground"
+                    : "text-ink-muted hover:text-foreground hover:bg-white/5"
                 }`}
                 style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
               >

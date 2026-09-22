@@ -26,10 +26,10 @@ export default function Button({
 }: ButtonProps) {
   const spawnRipple = useRipple();
   
-  const baseStyles = "inline-flex items-center justify-center font-medium rounded-xl relative overflow-hidden";
+  const baseStyles = "inline-flex items-center justify-center text-button rounded-xl relative overflow-hidden";
   
   const variantStyles = {
-    primary: "bg-gradient-to-r from-accent to-accent-hover text-white hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98]",
+    primary: "bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98]",
     secondary: "water-glass text-foreground hover:border-white/30 active:scale-[0.985]",
     ghost: "text-foreground hover:bg-white/10 active:bg-white/15",
   };

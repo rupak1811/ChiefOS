@@ -98,11 +98,11 @@ export default function ServicesPage() {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center flex-shrink-0">
                       <Icon className="w-7 h-7 text-white" />
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                      <p className="text-ink-muted">{service.description}</p>
-                    </div>
+                  <div>
+                    <h3 className="font-display text-h3 mb-2">{service.title}</h3>
+                    <p className="text-body-sm text-ink-muted">{service.description}</p>
                   </div>
+                </div>
 
                   <div className="mb-6">
                     <h4 className="font-semibold mb-3 text-accent">

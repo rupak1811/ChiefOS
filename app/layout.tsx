@@ -1,18 +1,28 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Body font - Inter (refined, readable, professional)
-const inter = Inter({
-  variable: "--font-inter",
+// Display font - Space Grotesk (Satoshi alternative - geometric, confident, memorable)
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
-// Display font - Space Grotesk (geometric, modern, distinctive)
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Body font - Inter (clean, highly legible at small sizes on glass)
+const inter = Inter({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+// Mono font - JetBrains Mono (technical OS feel for permissions, agent IDs)
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -32,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         {children}
       </body>
     </html>
