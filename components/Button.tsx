@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { useRipple } from "@/lib/useRipple";
+import { fluidTransition } from "@/lib/motion";
 
 interface ButtonProps {
   children: ReactNode;
@@ -43,25 +43,21 @@ export default function Button({
   const styles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${
     disabled ? "opacity-50 cursor-not-allowed" : ""
   } ${className}`;
-  
-  const transitionStyle = {
-    transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)",
-  };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    if ((variant === "secondary" || variant === "ghost") && !disabled) {
+    if (!disabled) {
       spawnRipple(e as any);
     }
   };
 
-  const content = <span>{children}</span>;
+  const content = <span className="relative z-10">{children}</span>;
 
   if (href && !disabled) {
     return (
       <Link 
         href={href} 
         className={styles} 
-        style={transitionStyle}
+        style={fluidTransition}
         onPointerDown={handlePointerDown as any}
       >
         {content}
@@ -74,7 +70,7 @@ export default function Button({
       onClick={onClick} 
       className={styles} 
       disabled={disabled}
-      style={transitionStyle}
+      style={fluidTransition}
       onPointerDown={handlePointerDown as any}
     >
       {content}

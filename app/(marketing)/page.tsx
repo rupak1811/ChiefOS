@@ -1,18 +1,54 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import Button from "@/components/Button";
 import GlassCard from "@/components/GlassCard";
 import ImageCarousel from "@/components/ImageCarousel";
+import { MOTION, sectionAnimation } from "@/lib/motion";
 import { Sparkles, Shield, Zap, CheckCircle } from "lucide-react";
 
 export default function HomePage() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <div className="relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-teal/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-blue/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-teal/20 rounded-full blur-3xl"
+          animate={
+            prefersReducedMotion
+              ? {}
+              : {
+                  y: [0, -30, 0],
+                  x: [0, 20, 0],
+                  scale: [1, 1.1, 1],
+                }
+          }
+          transition={{
+            duration: 12,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-blue/20 rounded-full blur-3xl"
+          animate={
+            prefersReducedMotion
+              ? {}
+              : {
+                  y: [0, 40, 0],
+                  x: [0, -25, 0],
+                  scale: [1, 1.15, 1],
+                }
+          }
+          transition={{
+            duration: 14,
+            ease: "easeInOut",
+            repeat: Infinity,
+            delay: 2,
+          }}
+        />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,7 +56,11 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { duration: 0.8, ease: MOTION.easing.fluid }
+            }
           >
             <h1 className="font-display text-display mb-6 text-balance">
               Run a permissioned agent workforce from one{" "}
@@ -50,9 +90,7 @@ export default function HomePage() {
 
         <section className="py-20">
           <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            {...sectionAnimation}
             className="font-display text-h2 text-center mb-12"
           >
             Why ChiefOS?
@@ -99,10 +137,7 @@ export default function HomePage() {
         <section className="py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              {...sectionAnimation}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Custom agent desks
@@ -126,10 +161,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              {...sectionAnimation}
             >
               <GlassCard className="p-8">
                 <div className="space-y-4">
@@ -159,10 +191,7 @@ export default function HomePage() {
 
         <section className="py-20 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            {...sectionAnimation}
             className="glass-morphism-light rounded-3xl p-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">

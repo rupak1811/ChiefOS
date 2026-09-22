@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRipple } from "@/lib/useRipple";
+import { fluidTransition } from "@/lib/motion";
 
 interface ApprovalActionsProps {
   approvalId: string;
@@ -10,6 +12,7 @@ interface ApprovalActionsProps {
 export default function ApprovalActions({ approvalId }: ApprovalActionsProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const spawnRipple = useRipple();
 
   const handleAction = async (action: "approve" | "reject") => {
     setLoading(true);
@@ -34,17 +37,21 @@ export default function ApprovalActions({ approvalId }: ApprovalActionsProps) {
     <div className="flex gap-2">
       <button
         onClick={() => handleAction("approve")}
+        onPointerDown={spawnRipple}
         disabled={loading}
-        className="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors disabled:opacity-50"
+        className="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 disabled:opacity-50 relative overflow-hidden"
+        style={fluidTransition}
       >
-        Approve
+        <span className="relative z-10">Approve</span>
       </button>
       <button
         onClick={() => handleAction("reject")}
+        onPointerDown={spawnRipple}
         disabled={loading}
-        className="px-4 py-2 bg-gray-500/20 text-gray-400 rounded-lg hover:bg-gray-500/30 transition-colors disabled:opacity-50"
+        className="px-4 py-2 bg-gray-500/20 text-gray-400 rounded-lg hover:bg-gray-500/30 disabled:opacity-50 relative overflow-hidden"
+        style={fluidTransition}
       >
-        Deny
+        <span className="relative z-10">Deny</span>
       </button>
     </div>
   );

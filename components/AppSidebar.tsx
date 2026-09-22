@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, useReducedMotion } from "framer-motion";
 import { 
   LayoutDashboard, 
   Bot, 
@@ -13,6 +14,8 @@ import {
   LogOut 
 } from "lucide-react";
 import Image from "next/image";
+import { MOTION, fluidTransition } from "@/lib/motion";
+import { useRipple } from "@/lib/useRipple";
 import Logo from "./Logo";
 
 const navItems = [
@@ -34,6 +37,8 @@ interface AppSidebarProps {
 
 export default function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
+  const prefersReducedMotion = useReducedMotion();
+  const spawnRipple = useRipple();
 
   return (
     <aside className="w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col">
@@ -43,7 +48,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
         </Link>
       </div>
 
-      <nav className="flex-1 px-4 space-y-1">
+      <nav className="flex-1 px-4 space-y-1 relative">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -51,15 +56,29 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             <Link
               key={item.href}
               href={item.href}
+              onPointerDown={spawnRipple}
               className={`flex items-center space-x-3 px-4 py-3 rounded-xl relative overflow-hidden ${
                 isActive
-                  ? "bg-gradient-to-r from-accent to-accent-hover text-white"
-                  : "text-foreground/70 hover:bg-white/5 hover:text-foreground"
+                  ? "text-foreground"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
-              style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
+              style={fluidTransition}
             >
-              <Icon className="w-5 h-5" />
-              <span className="font-medium">{item.label}</span>
+              {isActive && (
+                <motion.div
+                  layoutId="sidebar-indicator"
+                  className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent to-accent-hover"
+                  initial={false}
+                  transition={
+                    prefersReducedMotion
+                      ? { duration: 0 }
+                      : MOTION.spring.interactive
+                  }
+                  style={{ zIndex: 0 }}
+                />
+              )}
+              <Icon className="w-5 h-5 relative z-10" />
+              <span className="font-medium relative z-10">{item.label}</span>
             </Link>
           );
         })}
@@ -68,10 +87,12 @@ export default function AppSidebar({ user }: AppSidebarProps) {
       <div className="p-4 border-t border-white/10">
         <Link
           href="/app/kill-switch"
-          className="flex items-center space-x-3 px-4 py-3 rounded-xl mb-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all"
+          onPointerDown={spawnRipple}
+          className="flex items-center space-x-3 px-4 py-3 rounded-xl mb-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 relative overflow-hidden"
+          style={fluidTransition}
         >
-          <Power className="w-5 h-5" />
-          <span className="font-medium">Kill Switch</span>
+          <Power className="w-5 h-5 relative z-10" />
+          <span className="font-medium relative z-10">Kill Switch</span>
         </Link>
 
         <div className="flex items-center space-x-3 px-4 py-3">
@@ -98,10 +119,12 @@ export default function AppSidebar({ user }: AppSidebarProps) {
 
         <Link
           href="/api/auth/signout"
-          className="flex items-center space-x-3 px-4 py-2 rounded-xl text-foreground/70 hover:bg-white/5 hover:text-foreground transition-all"
+          onPointerDown={spawnRipple}
+          className="flex items-center space-x-3 px-4 py-2 rounded-xl text-foreground/70 hover:bg-white/5 hover:text-foreground relative overflow-hidden"
+          style={fluidTransition}
         >
-          <LogOut className="w-4 h-4" />
-          <span className="text-sm">Sign Out</span>
+          <LogOut className="w-4 h-4 relative z-10" />
+          <span className="text-sm relative z-10">Sign Out</span>
         </Link>
       </div>
     </aside>
