@@ -13,6 +13,7 @@ import {
   LogOut 
 } from "lucide-react";
 import Image from "next/image";
+import Logo from "./Logo";
 
 const navItems = [
   { href: "/app", label: "Dashboard", icon: LayoutDashboard },
@@ -37,11 +38,8 @@ export default function AppSidebar({ user }: AppSidebarProps) {
   return (
     <aside className="w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col">
       <div className="p-6">
-        <Link href="/app" className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center">
-            <span className="text-white font-bold text-xl">C</span>
-          </div>
-          <span className="text-xl font-bold text-gradient">ChiefOS</span>
+        <Link href="/app" className="flex items-center">
+          <Logo size="md" showText={true} />
         </Link>
       </div>
 

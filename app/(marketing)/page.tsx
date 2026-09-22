@@ -21,10 +21,10 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="text-gradient">Run a permissioned agent workforce from one desk.</span>
+            <h1 className="font-display text-hero font-bold mb-6 text-balance">
+              Run a permissioned agent workforce from one desk.
             </h1>
-            <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto mb-8">
+            <p className="text-subhead text-ink-muted max-w-3xl mx-auto mb-8 text-balance">
               ChiefOS co-ordinates specialised agents under clear roles and approvals. You set the brief; they execute within the guardrails you define.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -47,18 +47,18 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center mb-12"
+            className="font-display text-headline text-center mb-12"
           >
             Why ChiefOS?
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <GlassCard hover shimmer>
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center mb-4">
                   <Sparkles className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Multi-agent operations</h3>
-                <p className="text-foreground/70">
+                <h3 className="text-xl font-display mb-2">Multi-agent operations</h3>
+                <p className="text-ink-muted">
                   Stand up specialist agents for mail, chat, code, design, and ops. Each works in its lane; Lead keeps the thread.
                 </p>
               </div>
@@ -66,11 +66,11 @@ export default function HomePage() {
 
             <GlassCard hover shimmer>
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center mb-4">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Permissioned control</h3>
-                <p className="text-foreground/70">
+                <h3 className="text-xl font-display mb-2">Permissioned control</h3>
+                <p className="text-ink-muted">
                   Approvals before send, deploy, or spend. Agents draft and prepare; you decide what leaves the building.
                 </p>
               </div>
