@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { MOTION, colorTransition, fluidTransition } from "@/lib/motion";
+import { MOTION, colorStyle } from "@/lib/motion";
+import { useRipple } from "@/components/motion/Ripple";
+import LiquidPill from "@/components/motion/LiquidPill";
 import Logo from "./Logo";
 
 const navLinks = [
@@ -22,6 +24,7 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const spawnRipple = useRipple();
 
   const liquidTarget = hoveredLink || pathname;
 
@@ -39,7 +42,7 @@ export default function Navigation() {
                 key={link.href}
                 href={link.href}
                 className="px-4 py-2 rounded-full relative text-nav"
-                style={colorTransition}
+                style={colorStyle}
                 onMouseEnter={() => setHoveredLink(link.href)}
                 onMouseLeave={() => setHoveredLink(null)}
               >
@@ -51,33 +54,20 @@ export default function Navigation() {
                   {link.label}
                 </span>
                 {liquidTarget === link.href && (
-                  <motion.div
-                    layoutId="nav-liquid"
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: "rgba(45, 212, 191, 0.12)",
-                      border: "1px solid rgba(255, 255, 255, 0.16)",
-                      boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 24px rgba(45, 212, 191, 0.15)",
-                      backdropFilter: "blur(12px) saturate(160%)",
-                      pointerEvents: "none",
-                      zIndex: 0,
-                    }}
-                    initial={false}
-                    transition={
-                      prefersReducedMotion
-                        ? { duration: 0 }
-                        : MOTION.spring.nav
-                    }
-                  />
+                  <LiquidPill layoutId="nav-liquid" variant="nav" />
                 )}
               </Link>
             ))}
             <button
               onClick={() => signIn("google", { callbackUrl: "/app" })}
-              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98] font-semibold"
-              style={fluidTransition}
+              onPointerDown={spawnRipple}
+              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] font-semibold relative overflow-hidden transition-all"
+              style={{
+                transitionDuration: `${MOTION.duration.hover}ms`,
+                transitionTimingFunction: MOTION.easing.fluidCubic,
+              }}
             >
-              Get Started
+              <span className="relative z-10">Get Started</span>
             </button>
           </div>
 
@@ -91,17 +81,7 @@ export default function Navigation() {
       </div>
 
       {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={
-            prefersReducedMotion
-              ? { duration: 0 }
-              : MOTION.transition.fluid
-          }
-          className="md:hidden water-glass water-glass--heavy border-t border-white/10"
-        >
+        <div className="md:hidden water-glass water-glass--heavy border-t border-white/10">
           <div className="px-4 py-4 space-y-2">
             {navLinks.map((link) => (
               <Link
@@ -122,12 +102,16 @@ export default function Navigation() {
                 setMobileMenuOpen(false);
                 signIn("google", { callbackUrl: "/app" });
               }}
-              className="w-full px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] font-semibold"
+              onPointerDown={spawnRipple}
+              className="w-full px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] font-semibold relative overflow-hidden active:scale-[0.98] transition-transform"
+              style={{
+                transitionDuration: `${MOTION.duration.press}ms`,
+              }}
             >
-              Get Started
+              <span className="relative z-10">Get Started</span>
             </button>
           </div>
-        </motion.div>
+        </div>
       )}
     </nav>
   );

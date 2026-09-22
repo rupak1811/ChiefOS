@@ -1,18 +1,19 @@
 /**
- * ChiefOS Water Glass Motion System
- * Centralized motion tokens, transitions, and utilities
- * Implements consistent liquid/water animations across the product
+ * ChiefOS Global Water Motion System
+ * Source of truth for all motion tokens and transitions
+ * Implements GLOBAL_WATER_MOTION.md spec
  */
 
 export const MOTION = {
-  // Durations (ms)
+  // Durations (ms) - per GLOBAL_WATER_MOTION spec
   duration: {
     instant: 0,
-    fast: 150,
-    medium: 280,
-    fluid: 520,
-    ripple: 700,
-    settle: 900,
+    press: 120,      // Button press scale
+    medium: 280,     // Focus, nav scroll state
+    hover: 520,      // Hover lift/scale
+    ripple: 700,     // Water ripple from press
+    route: 480,      // Route transitions
+    scrollFade: 600, // Scroll reveal
   },
 
   // Easing curves
@@ -21,43 +22,21 @@ export const MOTION = {
     fluidCubic: "cubic-bezier(0.22, 1, 0.36, 1)",
     spring: [0.34, 1.3, 0.64, 1] as const,
     easeOut: [0.16, 1, 0.3, 1] as const,
-    easeInOut: [0.65, 0, 0.35, 1] as const,
   },
 
   // Spring configurations for Framer Motion
   spring: {
-    // Water-like: smooth, thick liquid feel
-    water: {
+    // Thick water liquid morph - nav, sidebar, tabs
+    fluid: {
       type: "spring" as const,
       stiffness: 380,
       damping: 36,
-      mass: 0.6,
-    },
-    // Navigation pill: ultra smooth
-    nav: {
-      type: "spring" as const,
-      stiffness: 380,
-      damping: 36,
-      mass: 0.6,
-    },
-    // Interactive elements: responsive but smooth
-    interactive: {
-      type: "spring" as const,
-      stiffness: 400,
-      damping: 32,
-      mass: 0.5,
-    },
-    // Gentle bounce for CTAs
-    bounce: {
-      type: "spring" as const,
-      stiffness: 300,
-      damping: 24,
-      mass: 0.8,
+      mass: 0.55,
     },
   },
 
-  // Framer Motion transition presets
-  transition: {
+  // Tween configurations
+  tween: {
     fluid: {
       duration: 0.52,
       ease: [0.22, 1, 0.36, 1] as const,
@@ -66,33 +45,43 @@ export const MOTION = {
       duration: 0.28,
       ease: [0.22, 1, 0.36, 1] as const,
     },
-    fast: {
-      duration: 0.15,
+    press: {
+      duration: 0.12,
       ease: [0.16, 1, 0.3, 1] as const,
+    },
+    route: {
+      duration: 0.48,
+      ease: [0.22, 1, 0.36, 1] as const,
     },
   },
 
   // Animation variants for common patterns
   variants: {
-    fadeIn: {
-      initial: { opacity: 0 },
-      animate: { opacity: 1 },
-      exit: { opacity: 0 },
+    // Route transitions
+    routeExit: {
+      opacity: 0,
+      y: -8,
+      filter: "blur(6px)",
     },
-    fadeInUp: {
-      initial: { opacity: 0, y: 24 },
+    routeEnter: {
+      initial: { opacity: 0, y: 12, filter: "blur(6px)" },
+      animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+    },
+    // Scroll reveal
+    reveal: {
+      initial: { opacity: 0, y: 20, filter: "blur(4px)" },
+      animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+    },
+    // Modals
+    modal: {
+      initial: { opacity: 0, y: 16, scale: 0.98 },
+      animate: { opacity: 1, y: 0, scale: 1 },
+      exit: { opacity: 0, y: 8, scale: 0.98 },
+    },
+    // Cards
+    card: {
+      initial: { opacity: 0, y: 16 },
       animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -12 },
-    },
-    fadeInScale: {
-      initial: { opacity: 0, scale: 0.96 },
-      animate: { opacity: 1, scale: 1 },
-      exit: { opacity: 0, scale: 0.98 },
-    },
-    slideIn: {
-      initial: { x: -20, opacity: 0 },
-      animate: { x: 0, opacity: 1 },
-      exit: { x: 20, opacity: 0 },
     },
   },
 
@@ -102,18 +91,35 @@ export const MOTION = {
     amount: 0.2,
     margin: "-80px",
   },
+
+  // Hover states for pressable elements
+  hover: {
+    lift: {
+      y: -1,
+      scale: 1.01,
+    },
+  },
+
+  // Press states
+  press: {
+    scale: 0.98,
+  },
 } as const;
+
+// Framer Motion presets (export for direct use)
+export const fluidTransition = MOTION.spring.fluid;
+export const fluidTween = MOTION.tween.fluid;
 
 /**
  * Get reduced motion-aware transition config
  * Returns instant transition if user prefers reduced motion
  */
 export function getTransition(
-  transition: typeof MOTION.transition.fluid | typeof MOTION.spring.water,
+  transition: any,
   prefersReducedMotion: boolean = false
 ) {
   if (prefersReducedMotion) {
-    return { duration: 0 };
+    return { duration: 0.01 };
   }
   return transition;
 }
@@ -121,36 +127,50 @@ export function getTransition(
 /**
  * Inline style for fluid transitions (use with style prop)
  */
-export const fluidTransition = {
+export const fluidStyle = {
   transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)",
+};
+
+/**
+ * Inline style for hover transitions
+ */
+export const hoverStyle = {
+  transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)",
+};
+
+/**
+ * Inline style for press transitions
+ */
+export const pressStyle = {
+  transition: "transform 120ms cubic-bezier(0.16, 1, 0.3, 1)",
 };
 
 /**
  * Inline style for color transitions
  */
-export const colorTransition = {
+export const colorStyle = {
   transition: "color 280ms cubic-bezier(0.22, 1, 0.36, 1)",
 };
 
 /**
- * Common section animation config
+ * Common scroll reveal animation config
  */
-export const sectionAnimation = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
+export const revealAnimation = {
+  initial: MOTION.variants.reveal.initial,
+  whileInView: MOTION.variants.reveal.animate,
   viewport: MOTION.viewport,
-  transition: MOTION.transition.fluid,
+  transition: {
+    duration: MOTION.duration.scrollFade / 1000,
+    ease: MOTION.easing.fluid,
+  },
 };
 
 /**
  * Card enter animation config
  */
 export const cardAnimation = {
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
+  initial: MOTION.variants.card.initial,
+  whileInView: MOTION.variants.card.animate,
   viewport: MOTION.viewport,
-  transition: {
-    duration: 0.6,
-    ease: MOTION.easing.fluid,
-  },
+  transition: fluidTween,
 };

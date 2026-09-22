@@ -5,7 +5,8 @@ import { signIn } from "next-auth/react";
 import Button from "@/components/Button";
 import GlassCard from "@/components/GlassCard";
 import ImageCarousel from "@/components/ImageCarousel";
-import { MOTION, sectionAnimation } from "@/lib/motion";
+import Reveal from "@/components/motion/Reveal";
+import { MOTION } from "@/lib/motion";
 import { Sparkles, Shield, Zap, CheckCircle } from "lucide-react";
 
 export default function HomePage() {
@@ -89,12 +90,11 @@ export default function HomePage() {
         </section>
 
         <section className="py-20">
-          <motion.h2
-            {...sectionAnimation}
-            className="font-display text-h2 text-center mb-12"
-          >
-            Why ChiefOS?
-          </motion.h2>
+          <Reveal>
+            <h2 className="font-display text-h2 text-center mb-12">
+              Why ChiefOS?
+            </h2>
+          </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <GlassCard hover shimmer>
               <div className="flex flex-col items-center text-center">
@@ -136,9 +136,7 @@ export default function HomePage() {
 
         <section className="py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              {...sectionAnimation}
-            >
+            <Reveal>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Custom agent desks
               </h2>
@@ -158,11 +156,9 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </Reveal>
 
-            <motion.div
-              {...sectionAnimation}
-            >
+            <Reveal>
               <GlassCard className="p-8">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
@@ -185,15 +181,13 @@ export default function HomePage() {
                   </div>
                 </div>
               </GlassCard>
-            </motion.div>
+            </Reveal>
           </div>
         </section>
 
         <section className="py-20 text-center">
-          <motion.div
-            {...sectionAnimation}
-            className="glass-morphism-light rounded-3xl p-12"
-          >
+          <Reveal>
+            <div className="glass-morphism-light rounded-3xl p-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to get started?
             </h2>
@@ -207,7 +201,8 @@ export default function HomePage() {
             >
               Get Started
             </Button>
-          </motion.div>
+            </div>
+          </Reveal>
         </section>
       </div>
     </div>

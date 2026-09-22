@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
 import { 
   LayoutDashboard, 
   Bot, 
@@ -14,8 +13,9 @@ import {
   LogOut 
 } from "lucide-react";
 import Image from "next/image";
-import { MOTION, fluidTransition } from "@/lib/motion";
-import { useRipple } from "@/lib/useRipple";
+import { MOTION } from "@/lib/motion";
+import { useRipple } from "@/components/motion/Ripple";
+import LiquidPill from "@/components/motion/LiquidPill";
 import Logo from "./Logo";
 
 const navItems = [
@@ -37,7 +37,6 @@ interface AppSidebarProps {
 
 export default function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
-  const prefersReducedMotion = useReducedMotion();
   const spawnRipple = useRipple();
 
   return (
@@ -57,25 +56,18 @@ export default function AppSidebar({ user }: AppSidebarProps) {
               key={item.href}
               href={item.href}
               onPointerDown={spawnRipple}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl relative overflow-hidden ${
+              className={`flex items-center space-x-3 px-4 py-3 rounded-xl relative overflow-hidden transition-all hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] ${
                 isActive
                   ? "text-foreground"
                   : "text-foreground/70 hover:text-foreground"
               }`}
-              style={fluidTransition}
+              style={{
+                transitionDuration: `${MOTION.duration.hover}ms`,
+                transitionTimingFunction: MOTION.easing.fluidCubic,
+              }}
             >
               {isActive && (
-                <motion.div
-                  layoutId="sidebar-indicator"
-                  className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent to-accent-hover"
-                  initial={false}
-                  transition={
-                    prefersReducedMotion
-                      ? { duration: 0 }
-                      : MOTION.spring.interactive
-                  }
-                  style={{ zIndex: 0 }}
-                />
+                <LiquidPill layoutId="sidebar-liquid" variant="sidebar" className="rounded-xl" />
               )}
               <Icon className="w-5 h-5 relative z-10" />
               <span className="font-medium relative z-10">{item.label}</span>
@@ -88,8 +80,11 @@ export default function AppSidebar({ user }: AppSidebarProps) {
         <Link
           href="/app/kill-switch"
           onPointerDown={spawnRipple}
-          className="flex items-center space-x-3 px-4 py-3 rounded-xl mb-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 relative overflow-hidden"
-          style={fluidTransition}
+          className="flex items-center space-x-3 px-4 py-3 rounded-xl mb-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] relative overflow-hidden transition-all"
+          style={{
+            transitionDuration: `${MOTION.duration.hover}ms`,
+            transitionTimingFunction: MOTION.easing.fluidCubic,
+          }}
         >
           <Power className="w-5 h-5 relative z-10" />
           <span className="font-medium relative z-10">Kill Switch</span>
@@ -120,8 +115,11 @@ export default function AppSidebar({ user }: AppSidebarProps) {
         <Link
           href="/api/auth/signout"
           onPointerDown={spawnRipple}
-          className="flex items-center space-x-3 px-4 py-2 rounded-xl text-foreground/70 hover:bg-white/5 hover:text-foreground relative overflow-hidden"
-          style={fluidTransition}
+          className="flex items-center space-x-3 px-4 py-2 rounded-xl text-foreground/70 hover:bg-white/5 hover:text-foreground hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] relative overflow-hidden transition-all"
+          style={{
+            transitionDuration: `${MOTION.duration.hover}ms`,
+            transitionTimingFunction: MOTION.easing.fluidCubic,
+          }}
         >
           <LogOut className="w-4 h-4 relative z-10" />
           <span className="text-sm relative z-10">Sign Out</span>

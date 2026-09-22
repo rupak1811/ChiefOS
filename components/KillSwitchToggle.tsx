@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useRipple } from "@/lib/useRipple";
-import { fluidTransition } from "@/lib/motion";
+import { useRipple } from "@/components/motion/Ripple";
+import { MOTION } from "@/lib/motion";
 
 interface KillSwitchToggleProps {
   isEnabled: boolean;
@@ -38,12 +38,15 @@ export default function KillSwitchToggle({ isEnabled }: KillSwitchToggleProps) {
       onClick={handleToggle}
       onPointerDown={spawnRipple}
       disabled={loading}
-      className={`px-8 py-4 rounded-xl font-bold text-lg disabled:opacity-50 relative overflow-hidden ${
+      className={`px-8 py-4 rounded-xl font-bold text-lg hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:scale-100 relative overflow-hidden transition-all ${
         isEnabled
           ? "bg-green-500/20 text-green-400 hover:bg-green-500/30"
           : "bg-red-500/20 text-red-400 hover:bg-red-500/30"
       }`}
-      style={fluidTransition}
+      style={{
+        transitionDuration: `${MOTION.duration.hover}ms`,
+        transitionTimingFunction: MOTION.easing.fluidCubic,
+      }}
     >
       <span className="relative z-10">
         {loading ? "Processing..." : isEnabled ? "Enable Agents" : "Disable All Agents"}

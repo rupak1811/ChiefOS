@@ -3,7 +3,7 @@
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { MOTION } from "@/lib/motion";
-import { useRipple } from "@/lib/useRipple";
+import { useRipple } from "@/components/motion/Ripple";
 
 const images = [
   {
