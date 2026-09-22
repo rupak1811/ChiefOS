@@ -35,10 +35,10 @@ export default function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 glass-morphism border-r border-white/10 flex flex-col">
+    <aside className="w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col">
       <div className="p-6">
         <Link href="/app" className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center">
             <span className="text-white font-bold text-xl">C</span>
           </div>
           <span className="text-xl font-bold text-gradient">ChiefOS</span>
@@ -53,11 +53,12 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+              className={`flex items-center space-x-3 px-4 py-3 rounded-xl relative overflow-hidden ${
                 isActive
-                  ? "bg-gradient-to-r from-accent-teal to-accent-blue text-white"
+                  ? "bg-gradient-to-r from-accent to-accent-hover text-white"
                   : "text-foreground/70 hover:bg-white/5 hover:text-foreground"
               }`}
+              style={{ transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)" }}
             >
               <Icon className="w-5 h-5" />
               <span className="font-medium">{item.label}</span>

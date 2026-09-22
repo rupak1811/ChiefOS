@@ -11,7 +11,7 @@
   --bg-panel-hover: rgba(255, 255, 255, 0.07);
   --bg-panel-strong: rgba(255, 255, 255, 0.09);
 
-  /* Glass */
+  /* Glass (legacy) */
   --glass-fill: rgba(255, 255, 255, 0.06);
   --glass-fill-strong: rgba(255, 255, 255, 0.10);
   --glass-border: rgba(255, 255, 255, 0.12);
@@ -20,6 +20,22 @@
   --glass-blur: 24px;
   --glass-blur-heavy: 40px;
   --glass-sat: 160%;
+
+  /* Water glass v2 — ultra-transparent liquid */
+  --water-fill: rgba(255, 255, 255, 0.035);
+  --water-fill-hover: rgba(255, 255, 255, 0.055);
+  --water-fill-active: rgba(255, 255, 255, 0.08);
+  --water-fill-strong: rgba(255, 255, 255, 0.07);
+  --water-border: rgba(255, 255, 255, 0.14);
+  --water-border-soft: rgba(255, 255, 255, 0.08);
+  --water-specular: rgba(255, 255, 255, 0.45);
+  --water-specular-soft: rgba(255, 255, 255, 0.18);
+  --water-blur: 40px;
+  --water-blur-heavy: 64px;
+  --water-sat: 180%;
+  --water-contrast: 105%;
+  --water-tint: rgba(45, 212, 191, 0.04);
+  --water-tint-strong: rgba(45, 212, 191, 0.08);
 
   /* Text */
   --text-primary: #F4F7FB;
@@ -67,6 +83,13 @@
   --dur-med: 280ms;
   --dur-slow: 480ms;
 
+  /* Fluid motion v2 */
+  --fluid-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --fluid-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+  --dur-fluid: 520ms;
+  --dur-ripple: 700ms;
+  --dur-settle: 900ms;
+
   /* Legacy compat */
   --background: var(--bg-base);
   --foreground: var(--text-primary);
@@ -76,6 +99,16 @@ body {
   color: var(--text-primary);
   background: var(--bg-base);
   font-family: var(--font-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 @layer utilities {
@@ -144,6 +177,40 @@ body {
     var(--bg-base);
 }
 
+/* Water mesh — for v2 water glass */
+.water-mesh {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(45, 212, 191, 0.22), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 85% 30%, rgba(96, 165, 250, 0.12), transparent 50%),
+    radial-gradient(ellipse 45% 40% at 15% 70%, rgba(45, 212, 191, 0.10), transparent 50%),
+    #070B14;
+}
+
+/* Living water caustics */
+.water-caustics {
+  pointer-events: none;
+  position: absolute;
+  inset: -20%;
+  opacity: 0.35;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.07) 0 2%, transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(45,212,191,0.08) 0 3%, transparent 40%),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0 2%, transparent 35%);
+  animation: caustic-drift 18s var(--fluid-ease) infinite alternate;
+  filter: blur(30px);
+}
+
+@keyframes caustic-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .water-caustics {
+    animation: none;
+  }
+}
+
 .noise-overlay::after {
   content: "";
   pointer-events: none;
@@ -152,6 +219,93 @@ body {
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
+}
+
+/* Water glass v2 — ultra-transparent liquid surface */
+.water-glass {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--water-specular-soft), transparent 28%),
+    var(--water-tint),
+    var(--water-fill);
+  border: 1px solid var(--water-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition:
+    background var(--dur-fluid) var(--fluid-ease),
+    border-color var(--dur-fluid) var(--fluid-ease),
+    transform var(--dur-fluid) var(--fluid-ease),
+    box-shadow var(--dur-fluid) var(--fluid-ease);
+}
+
+@supports (backdrop-filter: blur(40px)) {
+  .water-glass {
+    backdrop-filter: blur(var(--water-blur)) saturate(var(--water-sat)) contrast(var(--water-contrast));
+    -webkit-backdrop-filter: blur(var(--water-blur)) saturate(var(--water-sat)) contrast(var(--water-contrast));
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 var(--water-specular),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  }
+}
+
+.water-glass:hover {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 32%),
+    var(--water-tint-strong),
+    var(--water-fill-hover);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px) scale(1.005);
+}
+
+.water-glass:active {
+  transform: translateY(-1px) scale(0.985);
+  transition-duration: 120ms;
+}
+
+.water-glass--heavy {
+  background:
+    linear-gradient(180deg, var(--water-specular-soft), transparent 30%),
+    var(--water-fill-strong);
+}
+
+@supports (backdrop-filter: blur(64px)) {
+  .water-glass--heavy {
+    backdrop-filter: blur(var(--water-blur-heavy)) saturate(var(--water-sat));
+    -webkit-backdrop-filter: blur(var(--water-blur-heavy)) saturate(var(--water-sat));
+  }
+}
+
+/* Water ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(45, 212, 191, 0.25) 35%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: scale(0);
+  animation: water-ripple var(--dur-ripple) var(--fluid-ease) forwards;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes water-ripple {
+  to {
+    transform: scale(22);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple {
+    animation-duration: 150ms;
+  }
 }
 
 /* Legacy compat - keep existing class names working */

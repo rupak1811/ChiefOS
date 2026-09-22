@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { useRipple } from "@/lib/useRipple";
 
 interface ButtonProps {
   children: ReactNode;
@@ -23,12 +24,14 @@ export default function Button({
   className = "",
   disabled = false,
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200";
+  const spawnRipple = useRipple();
+  
+  const baseStyles = "inline-flex items-center justify-center font-medium rounded-xl relative overflow-hidden";
   
   const variantStyles = {
-    primary: "bg-gradient-to-r from-accent-teal to-accent-blue text-white hover:shadow-lg hover:shadow-accent-teal/50",
-    secondary: "glass-morphism-light text-foreground hover:bg-white/20",
-    ghost: "text-foreground hover:bg-white/10",
+    primary: "bg-gradient-to-r from-accent to-accent-hover text-white hover:shadow-lg hover:shadow-accent/25 hover:scale-[1.02] active:scale-[0.98]",
+    secondary: "water-glass text-foreground hover:border-white/30 active:scale-[0.985]",
+    ghost: "text-foreground hover:bg-white/10 active:bg-white/15",
   };
   
   const sizeStyles = {
@@ -40,26 +43,40 @@ export default function Button({
   const styles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${
     disabled ? "opacity-50 cursor-not-allowed" : ""
   } ${className}`;
+  
+  const transitionStyle = {
+    transition: "all 520ms cubic-bezier(0.22, 1, 0.36, 1)",
+  };
 
-  const content = (
-    <motion.span
-      whileHover={!disabled ? { scale: 1.05 } : {}}
-      whileTap={!disabled ? { scale: 0.95 } : {}}
-    >
-      {children}
-    </motion.span>
-  );
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if ((variant === "secondary" || variant === "ghost") && !disabled) {
+      spawnRipple(e as any);
+    }
+  };
+
+  const content = <span>{children}</span>;
 
   if (href && !disabled) {
     return (
-      <Link href={href} className={styles}>
+      <Link 
+        href={href} 
+        className={styles} 
+        style={transitionStyle}
+        onPointerDown={handlePointerDown as any}
+      >
         {content}
       </Link>
     );
   }
 
   return (
-    <button onClick={onClick} className={styles} disabled={disabled}>
+    <button 
+      onClick={onClick} 
+      className={styles} 
+      disabled={disabled}
+      style={transitionStyle}
+      onPointerDown={handlePointerDown as any}
+    >
       {content}
     </button>
   );
