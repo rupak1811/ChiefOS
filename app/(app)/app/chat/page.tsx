@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import GlassCard from "@/components/GlassCard";
+import Reveal from "@/components/motion/Reveal";
 import { Send, Bot, User } from "lucide-react";
 
 interface Message {
@@ -63,14 +64,17 @@ export default function ChatPage() {
 
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col">
-      <div className="mb-4">
-        <h1 className="text-3xl font-bold mb-2">Talk to Lead</h1>
-        <p className="text-foreground/70">
-          Your orchestrator agent for planning and co-ordination
-        </p>
-      </div>
+      <Reveal>
+        <div className="mb-4">
+          <h1 className="text-3xl font-bold mb-2">Talk to Lead</h1>
+          <p className="text-foreground/70">
+            Your orchestrator agent for planning and co-ordination
+          </p>
+        </div>
+      </Reveal>
 
-      <GlassCard className="flex-1 flex flex-col p-0 overflow-hidden">
+      <Reveal delay={0.1}>
+        <GlassCard className="flex-1 flex flex-col p-0 overflow-hidden">
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center">
@@ -178,7 +182,8 @@ export default function ChatPage() {
             </button>
           </div>
         </div>
-      </GlassCard>
+        </GlassCard>
+      </Reveal>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import GlassCard from "@/components/GlassCard";
+import Reveal from "@/components/motion/Reveal";
 import { FileText, Filter } from "lucide-react";
 
 export default async function LedgerPage() {
@@ -17,14 +18,17 @@ export default async function LedgerPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Action Ledger</h1>
-        <p className="text-foreground/70">
-          Immutable audit trail of all agent operations
-        </p>
-      </div>
+      <Reveal>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Action Ledger</h1>
+          <p className="text-foreground/70">
+            Immutable audit trail of all agent operations
+          </p>
+        </div>
+      </Reveal>
 
-      <GlassCard className="p-6 mb-6">
+      <Reveal delay={0.1}>
+        <GlassCard className="p-6 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <FileText className="w-6 h-6 text-accent-teal" />
@@ -38,11 +42,13 @@ export default async function LedgerPage() {
             Filter
           </button>
         </div>
-      </GlassCard>
+        </GlassCard>
+      </Reveal>
 
       <div className="space-y-3">
-        {entries.map((entry) => (
-          <GlassCard key={entry.id} className="p-4">
+        {entries.map((entry, index) => (
+          <Reveal key={entry.id} delay={0.2} index={index} stagger={60}>
+            <GlassCard className="p-4">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-1">
@@ -71,16 +77,19 @@ export default async function LedgerPage() {
                 </p>
               </div>
             )}
-          </GlassCard>
+            </GlassCard>
+          </Reveal>
         ))}
 
         {entries.length === 0 && (
-          <GlassCard className="p-12 text-center">
+          <Reveal delay={0.2}>
+            <GlassCard className="p-12 text-center">
             <FileText className="w-12 h-12 mx-auto mb-4 text-foreground/30" />
             <p className="text-foreground/60">
               No actions logged yet. Agent operations will appear here.
             </p>
-          </GlassCard>
+            </GlassCard>
+          </Reveal>
         )}
       </div>
     </div>

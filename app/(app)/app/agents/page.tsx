@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import GlassCard from "@/components/GlassCard";
+import Reveal from "@/components/motion/Reveal";
 import { Brain, Database, Code2, Shield } from "lucide-react";
 
 const agentIcons = {
@@ -23,18 +24,21 @@ export default async function AgentsPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Agents</h1>
-        <p className="text-foreground/70">
-          Your specialized agent fleet with defined capabilities
-        </p>
-      </div>
+      <Reveal>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Agents</h1>
+          <p className="text-foreground/70">
+            Your specialized agent fleet with defined capabilities
+          </p>
+        </div>
+      </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {agents.map((agent) => {
+        {agents.map((agent, index) => {
           const Icon = agentIcons[agent.name as keyof typeof agentIcons] || Brain;
           return (
-            <GlassCard key={agent.id} className="p-6">
+            <Reveal key={agent.id} delay={0.1} index={index} stagger={80}>
+              <GlassCard className="p-6">
               <div className="flex items-start gap-4 mb-4">
                 <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center flex-shrink-0">
                   <Icon className="w-7 h-7 text-white" />
@@ -86,17 +90,20 @@ export default async function AgentsPage() {
                   </p>
                 </div>
               </div>
-            </GlassCard>
+              </GlassCard>
+            </Reveal>
           );
         })}
       </div>
 
       {agents.length === 0 && (
-        <GlassCard className="p-12 text-center">
+        <Reveal delay={0.1}>
+          <GlassCard className="p-12 text-center">
           <p className="text-foreground/60">
             No agents configured yet. Initialize your agent fleet to get started.
           </p>
-        </GlassCard>
+          </GlassCard>
+        </Reveal>
       )}
     </div>
   );
