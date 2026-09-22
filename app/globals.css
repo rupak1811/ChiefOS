@@ -1,0 +1,486 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Surfaces — deep navy / charcoal */
+  --bg-base: #070B14;
+  --bg-elevated: #0C1220;
+  --bg-sunken: #05080F;
+  --bg-panel: rgba(255, 255, 255, 0.04);
+  --bg-panel-hover: rgba(255, 255, 255, 0.07);
+  --bg-panel-strong: rgba(255, 255, 255, 0.09);
+
+  /* Glass (legacy) */
+  --glass-fill: rgba(255, 255, 255, 0.06);
+  --glass-fill-strong: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-strong: rgba(255, 255, 255, 0.18);
+  --glass-highlight: rgba(255, 255, 255, 0.22);
+  --glass-blur: 24px;
+  --glass-blur-heavy: 40px;
+  --glass-sat: 160%;
+
+  /* Water glass v2 — ultra-transparent liquid */
+  --water-fill: rgba(255, 255, 255, 0.035);
+  --water-fill-hover: rgba(255, 255, 255, 0.055);
+  --water-fill-active: rgba(255, 255, 255, 0.08);
+  --water-fill-strong: rgba(255, 255, 255, 0.07);
+  --water-border: rgba(255, 255, 255, 0.14);
+  --water-border-soft: rgba(255, 255, 255, 0.08);
+  --water-specular: rgba(255, 255, 255, 0.45);
+  --water-specular-soft: rgba(255, 255, 255, 0.18);
+  --water-blur: 40px;
+  --water-blur-heavy: 64px;
+  --water-sat: 180%;
+  --water-contrast: 105%;
+  --water-tint: rgba(45, 212, 191, 0.04);
+  --water-tint-strong: rgba(45, 212, 191, 0.08);
+
+  /* Text */
+  --text-primary: #F4F7FB;
+  --text-secondary: rgba(244, 247, 251, 0.72);
+  --text-tertiary: rgba(244, 247, 251, 0.48);
+  --text-inverse: #070B14;
+
+  /* Accent — teal */
+  --accent: #2DD4BF;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --accent-glow: rgba(45, 212, 191, 0.35);
+  --accent-hover: #5EEAD4;
+  --accent-pressed: #14B8A6;
+
+  /* Semantic */
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --info: #60A5FA;
+
+  /* Rings / focus */
+  --ring: rgba(45, 212, 191, 0.55);
+  --ring-offset: #070B14;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-float: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --shadow-accent: 0 0 40px rgba(45, 212, 191, 0.25);
+
+  /* Typography - ChiefOS Brand */
+  --font-display: var(--font-display), "Satoshi", "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  
+  /* Legacy compat */
+  --font-sans: var(--font-body);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-med: 280ms;
+  --dur-slow: 480ms;
+
+  /* Fluid motion v2 */
+  --fluid-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --fluid-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+  --dur-fluid: 520ms;
+  --dur-ripple: 700ms;
+  --dur-settle: 900ms;
+
+  /* Legacy compat */
+  --background: var(--bg-base);
+  --foreground: var(--text-primary);
+}
+
+body {
+  color: var(--text-primary);
+  background: var(--bg-base);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* ChiefOS Brand Typography Scale */
+  .font-display {
+    font-family: var(--font-display);
+  }
+  
+  /* Logo sizes */
+  .text-logo-sm {
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  
+  .text-logo-md {
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  
+  .text-logo-lg {
+    font-size: clamp(40px, 5vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  
+  /* Display - Landing H1 only */
+  .text-display {
+    font-size: clamp(64px, 7vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 650;
+  }
+  
+  /* H1 - Page titles */
+  .text-h1 {
+    font-size: clamp(40px, 5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 650;
+  }
+  
+  /* H2 - Sections */
+  .text-h2 {
+    font-size: clamp(28px, 3.5vw, 32px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  
+  /* H3 - Cards */
+  .text-h3 {
+    font-size: clamp(20px, 2.5vw, 22px);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+  }
+  
+  /* Nav */
+  .text-nav {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+  }
+  
+  /* Body */
+  .text-body {
+    font-size: clamp(16px, 1.5vw, 17px);
+    line-height: 1.6;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+  
+  .text-body-sm {
+    font-size: clamp(13px, 1.2vw, 14px);
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+  
+  /* Button */
+  .text-button {
+    font-size: clamp(14px, 1.2vw, 15px);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+  }
+  
+  /* Eyebrow */
+  .text-eyebrow {
+    font-size: clamp(11px, 1vw, 12px);
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  /* Mono */
+  .text-mono {
+    font-family: var(--font-mono);
+    font-size: clamp(12px, 1.1vw, 13px);
+    line-height: 1.4;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  
+  /* Brand gradient for text */
+  .text-grad-brand {
+    background: linear-gradient(135deg, #2DD4BF 0%, #22D3EE 50%, #818CF8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .text-grad-wordmark {
+    background: linear-gradient(105deg, #F4F7FB 0%, #F4F7FB 55%, #2DD4BF 78%, #22D3EE 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Progressive glass enhancement - solid fallback, then glass */
+.glass {
+  background: var(--bg-panel-strong);
+  border: 1px solid var(--glass-border);
+}
+
+@supports (backdrop-filter: blur(24px)) {
+  .glass {
+    background: var(--glass-fill);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    box-shadow: var(--shadow-glass);
+  }
+}
+
+.glass-strong {
+  background: var(--bg-panel-strong);
+  border: 1px solid var(--glass-border-strong);
+}
+
+@supports (backdrop-filter: blur(40px)) {
+  .glass-strong {
+    background: var(--glass-fill-strong);
+    backdrop-filter: blur(var(--glass-blur-heavy)) saturate(var(--glass-sat));
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(var(--glass-sat));
+    box-shadow: var(--shadow-glass);
+  }
+}
+
+.glass-edge {
+  position: relative;
+}
+
+.glass-edge::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    var(--glass-highlight) 0%,
+    transparent 40%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.mesh-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(45, 212, 191, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(96, 165, 250, 0.10), transparent 50%),
+    radial-gradient(ellipse 50% 30% at 10% 40%, rgba(45, 212, 191, 0.08), transparent 45%),
+    var(--bg-base);
+}
+
+/* Water mesh — for v2 water glass */
+.water-mesh {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(45, 212, 191, 0.22), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 85% 30%, rgba(96, 165, 250, 0.12), transparent 50%),
+    radial-gradient(ellipse 45% 40% at 15% 70%, rgba(45, 212, 191, 0.10), transparent 50%),
+    #070B14;
+}
+
+/* Living water caustics */
+.water-caustics {
+  pointer-events: none;
+  position: absolute;
+  inset: -20%;
+  opacity: 0.35;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.07) 0 2%, transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(45,212,191,0.08) 0 3%, transparent 40%),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0 2%, transparent 35%);
+  animation: caustic-drift 18s var(--fluid-ease) infinite alternate;
+  filter: blur(30px);
+}
+
+@keyframes caustic-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .water-caustics {
+    animation: none;
+  }
+}
+
+.noise-overlay::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Water glass v2 — ultra-transparent liquid surface */
+.water-glass {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--water-specular-soft), transparent 28%),
+    var(--water-tint),
+    var(--water-fill);
+  border: 1px solid var(--water-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition:
+    background var(--dur-fluid) var(--fluid-ease),
+    border-color var(--dur-fluid) var(--fluid-ease),
+    transform var(--dur-fluid) var(--fluid-ease),
+    box-shadow var(--dur-fluid) var(--fluid-ease);
+}
+
+@supports (backdrop-filter: blur(40px)) {
+  .water-glass {
+    backdrop-filter: blur(var(--water-blur)) saturate(var(--water-sat)) contrast(var(--water-contrast));
+    -webkit-backdrop-filter: blur(var(--water-blur)) saturate(var(--water-sat)) contrast(var(--water-contrast));
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 var(--water-specular),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  }
+}
+
+.water-glass:hover {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 32%),
+    var(--water-tint-strong),
+    var(--water-fill-hover);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px) scale(1.005);
+}
+
+.water-glass:active {
+  transform: translateY(-1px) scale(0.985);
+  transition-duration: 120ms;
+}
+
+.water-glass--heavy {
+  background:
+    linear-gradient(180deg, var(--water-specular-soft), transparent 30%),
+    var(--water-fill-strong);
+}
+
+@supports (backdrop-filter: blur(64px)) {
+  .water-glass--heavy {
+    backdrop-filter: blur(var(--water-blur-heavy)) saturate(var(--water-sat));
+    -webkit-backdrop-filter: blur(var(--water-blur-heavy)) saturate(var(--water-sat));
+  }
+}
+
+/* Water ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(45, 212, 191, 0.25) 35%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: scale(0);
+  animation: water-ripple var(--dur-ripple) var(--fluid-ease) forwards;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes water-ripple {
+  to {
+    transform: scale(22);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple {
+    animation-duration: 150ms;
+  }
+}
+
+/* Legacy compat - keep existing class names working */
+.glass-morphism {
+  @apply glass;
+}
+
+.glass-morphism-light {
+  @apply glass-strong;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
