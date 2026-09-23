@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { generateProjectTeammates } from "@/lib/project-teammates";
 
 // GET /api/projects - List user's projects
 export async function GET(req: NextRequest) {
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { name, slug, description, color } = body;
+  const { name, slug, description, details, color } = body;
 
   if (!name || !slug) {
     return NextResponse.json(
@@ -68,9 +69,23 @@ export async function POST(req: NextRequest) {
       name,
       slug,
       description: description || null,
+      details: details || null,
       color: color || "#2DD4BF",
     },
   });
+
+  // Auto-generate project teammates
+  try {
+    await generateProjectTeammates({
+      name: project.name,
+      details: project.details,
+      userId: session.user.id,
+      projectId: project.id,
+    });
+  } catch (error) {
+    console.error("Failed to generate teammates:", error);
+    // Continue even if teammate generation fails
+  }
 
   // Log to ledger - if there's a guardian agent
   const guardianAgent = await prisma.agent.findFirst({
