@@ -44,14 +44,14 @@ export default function AppSidebar({ user }: AppSidebarProps) {
   const spawnRipple = useRipple();
 
   return (
-    <aside className="w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col">
-      <div className="p-6">
+    <aside className="fixed left-0 top-0 bottom-0 w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col z-40">
+      <div className="p-6 flex-shrink-0">
         <Link href="/app" className="flex items-center">
           <Logo size="nav" showText={true} usePNG={true} />
         </Link>
       </div>
 
-      <nav className="flex-1 px-4 space-y-1 relative">
+      <nav className="flex-1 px-4 space-y-1 relative overflow-y-auto overflow-x-hidden">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -80,7 +80,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-white/10 flex-shrink-0">
         <Link
           href="/app/kill-switch"
           onPointerDown={spawnRipple}

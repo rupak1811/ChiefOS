@@ -32,6 +32,7 @@ export default function ProjectsPage() {
     name: "",
     slug: "",
     description: "",
+    details: "",
     color: "#2DD4BF",
   });
 
@@ -74,12 +75,11 @@ export default function ProjectsPage() {
         const project = await res.json();
         setProjects([project, ...projects]);
         setShowCreateModal(false);
-        setFormData({ name: "", slug: "", description: "", color: "#2DD4BF" });
+        setFormData({ name: "", slug: "", description: "", details: "", color: "#2DD4BF" });
         
-        // Open in new tab AND navigate current view
+        // Open in new tab
         const projectUrl = `/app/p/${project.slug}`;
         window.open(projectUrl, "_blank");
-        router.push(projectUrl);
       } else {
         const error = await res.json();
         alert(error.error || "Failed to create project");
@@ -237,12 +237,25 @@ export default function ProjectsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Description (optional)</label>
-                <textarea
+                <input
+                  type="text"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-accent-teal focus:outline-none resize-none"
-                  rows={3}
-                  placeholder="What's this project about?"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-accent-teal focus:outline-none"
+                  placeholder="A brief tagline or summary"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Project Details</label>
+                <p className="text-xs text-foreground/50 mb-2">
+                  Paste your PRD, goals, stack, constraints, or any context. This helps generate the right AI teammates.
+                </p>
+                <textarea
+                  value={formData.details}
+                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-accent-teal focus:outline-none resize-none font-mono text-sm"
+                  rows={8}
+                  placeholder="## Project Goals&#10;- Build a mobile-first app...&#10;&#10;## Tech Stack&#10;- React Native, Node.js, PostgreSQL...&#10;&#10;## Constraints&#10;- Launch in Q2..."
                 />
               </div>
               <div>

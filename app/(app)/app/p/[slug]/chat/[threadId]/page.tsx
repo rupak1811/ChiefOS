@@ -154,8 +154,9 @@ export default function ChatThreadPage({ params }: PageProps) {
       </div>
 
       {/* Messages */}
-      <GlassCard className="flex-1 p-6 overflow-y-auto mb-4">
-        <div className="space-y-4">
+      <GlassCard className="flex-1 flex flex-col mb-4 min-h-0">
+        <div className="flex-1 p-6 overflow-y-auto">
+          <div className="space-y-4">
           {thread.messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
               <Bot className="w-16 h-16 text-foreground/40 mb-4" />
@@ -211,12 +212,13 @@ export default function ChatThreadPage({ params }: PageProps) {
               </div>
             </div>
           )}
-          <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} />
+          </div>
         </div>
       </GlassCard>
 
       {/* Input */}
-      <form onSubmit={handleSend} className="flex gap-3">
+      <form onSubmit={handleSend} className="flex gap-3 flex-shrink-0">
         <input
           type="text"
           value={message}
