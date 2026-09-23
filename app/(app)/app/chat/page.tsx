@@ -180,8 +180,8 @@ export default function ChatPage() {
     const thread = threads.find((t) => t.id === selectedThread);
 
     return (
-      <div>
-        <div className="flex items-center gap-4 mb-6">
+      <div className="flex flex-col h-full">
+        <div className="flex items-center gap-4 mb-6 flex-shrink-0">
           <button
             onClick={() => setSelectedThread(null)}
             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
@@ -208,12 +208,11 @@ export default function ChatPage() {
           )}
         </div>
 
-        <div className="mb-4" style={{ height: "calc(100vh - 20rem)" }}>
-          <GlassCard className="p-6 h-full">
-          <div className="h-full overflow-y-auto">
+        <GlassCard className="flex-1 flex flex-col mb-4 min-h-0">
+          <div className="flex-1 p-6 overflow-y-auto">
             <div className="space-y-4">
               {messages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center">
+                <div className="flex flex-col items-center justify-center h-full text-center py-12">
                   <Bot className="w-16 h-16 text-foreground/40 mb-4" />
                   <p className="text-foreground/60">
                     Start a conversation with {thread?.agent?.name || "your agent"}
@@ -270,10 +269,9 @@ export default function ChatPage() {
               <div ref={messagesEndRef} />
             </div>
           </div>
-          </GlassCard>
-        </div>
+        </GlassCard>
 
-        <form onSubmit={handleSend} className="flex gap-3">
+        <form onSubmit={handleSend} className="flex gap-3 flex-shrink-0">
           <input
             type="text"
             value={message}
