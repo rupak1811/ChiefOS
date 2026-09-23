@@ -15,12 +15,12 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="h-screen overflow-hidden relative">
       <div className="fixed inset-0 water-mesh -z-10" />
       <div className="fixed inset-0 water-caustics -z-10" />
       <AppSidebar user={session.user} />
-      <main className="pl-64 min-h-screen flex flex-col">
-        <div className="flex-1 p-8 overflow-auto">
+      <main className="pl-64 h-screen overflow-hidden flex flex-col">
+        <div className="flex-1 min-h-0 p-8 overflow-auto">
           {children}
         </div>
       </main>

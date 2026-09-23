@@ -124,9 +124,9 @@ export default function ChatThreadPage({ params }: PageProps) {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)]">
+    <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-6 flex-shrink-0">
         <button
           onClick={() => router.push(`/app/p/${slug}/chat`)}
           className="p-2 hover:bg-white/10 rounded-lg transition-colors"
