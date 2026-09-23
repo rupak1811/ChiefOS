@@ -62,7 +62,7 @@ export default async function KillSwitchPage() {
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6">
+        <GlassCard className="p-6" immediate>
           <h3 className="font-bold text-lg mb-4">How it works</h3>
           <div className="space-y-3 text-sm text-foreground/70">
             <div className="flex items-start gap-3">

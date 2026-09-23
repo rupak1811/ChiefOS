@@ -121,7 +121,7 @@ export default function NewAgentPage() {
       </Reveal>
 
       <Reveal immediate delay={0.1}>
-        <GlassCard className="p-8">
+        <GlassCard className="p-8" immediate>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Avatar Preview */}
             <div className="flex justify-center mb-6">

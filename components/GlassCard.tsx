@@ -12,6 +12,7 @@ interface GlassCardProps {
   shimmer?: boolean;
   heavy?: boolean;
   interactive?: boolean;
+  immediate?: boolean;
 }
 
 export default function GlassCard({ 
@@ -21,14 +22,22 @@ export default function GlassCard({
   shimmer = false,
   heavy = false,
   interactive = false,
+  immediate = false,
 }: GlassCardProps) {
   const spawnRipple = useRipple();
   
   const baseClass = heavy ? "water-glass water-glass--heavy" : "water-glass";
   
+  const animationProps = immediate
+    ? {
+        initial: { opacity: 1, y: 0 },
+        animate: { opacity: 1, y: 0 },
+      }
+    : cardAnimation;
+  
   return (
     <motion.div
-      {...cardAnimation}
+      {...animationProps}
       className={`${baseClass} p-6 ${
         shimmer ? "card-shimmer" : ""
       } ${interactive ? "relative overflow-hidden cursor-pointer" : ""} ${

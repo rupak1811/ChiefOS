@@ -146,7 +146,7 @@ export default function ProjectTasksPage({ params }: PageProps) {
 
       {tasks.length === 0 ? (
         <Reveal immediate delay={0.1}>
-          <GlassCard className="p-12 text-center">
+          <GlassCard className="p-12 text-center" immediate>
             <ListTodo className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No tasks yet</h3>
             <p className="text-foreground/60 mb-6">
@@ -169,7 +169,7 @@ export default function ProjectTasksPage({ params }: PageProps) {
 
             return (
               <Reveal immediate key={column.id} delay={0.1} index={statusColumns.indexOf(column)} stagger={80}>
-                <GlassCard className="p-4">
+                <GlassCard className="p-4" immediate>
                   <div className="flex items-center gap-2 mb-4">
                     <Icon className={`w-5 h-5 ${column.color}`} />
                     <h3 className="font-bold">{column.label}</h3>
@@ -227,7 +227,7 @@ export default function ProjectTasksPage({ params }: PageProps) {
           onClick={() => setShowNewModal(false)}
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <GlassCard className="p-8 max-w-lg w-full">
+            <GlassCard className="p-8 max-w-lg w-full" immediate>
               <h2 className="text-2xl font-bold mb-6">Create Task</h2>
               <form onSubmit={handleCreate} className="space-y-4">
                 <div>

@@ -72,7 +72,7 @@ export default function HelpPage() {
           const Icon = faq.icon;
           return (
             <Reveal immediate key={index} delay={0.1} index={index} stagger={70}>
-              <GlassCard className="p-6">
+              <GlassCard className="p-6" immediate>
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center flex-shrink-0">
                   <Icon className="w-5 h-5 text-white" />
@@ -89,7 +89,7 @@ export default function HelpPage() {
       </div>
 
       <Reveal immediate delay={0.8}>
-        <GlassCard className="mt-8 p-8 text-center">
+        <GlassCard className="mt-8 p-8 text-center" immediate>
         <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
         <p className="text-foreground/70 mb-6">
           Chat with Lead or reach out to our support team.

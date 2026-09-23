@@ -208,7 +208,7 @@ export default function ChatPage() {
           )}
         </div>
 
-        <GlassCard className="flex-1 flex flex-col mb-4 min-h-0">
+        <GlassCard className="flex-1 flex flex-col mb-4 min-h-0" immediate>
           <div className="flex-1 p-6 overflow-y-auto">
             <div className="space-y-4">
               {messages.length === 0 ? (
@@ -313,7 +313,7 @@ export default function ChatPage() {
 
       {threads.length === 0 ? (
         <Reveal immediate delay={0.1}>
-          <GlassCard className="p-12 text-center">
+          <GlassCard className="p-12 text-center" immediate>
             <MessageSquare className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No conversations yet</h3>
             <p className="text-foreground/60 mb-6">
@@ -336,7 +336,7 @@ export default function ChatPage() {
                 onClick={() => setSelectedThread(thread.id)}
                 className="cursor-pointer hover:scale-[1.02] transition-transform"
               >
-                <GlassCard className="p-6">
+                <GlassCard className="p-6" immediate>
                   <div className="flex items-start gap-4 mb-4">
                     {thread.agent ? (
                       <div
@@ -384,7 +384,7 @@ export default function ChatPage() {
           onClick={() => setShowNewModal(false)}
         >
           <div onClick={(e) => e.stopPropagation()}>
-            <GlassCard className="p-8 max-w-lg w-full">
+            <GlassCard className="p-8 max-w-lg w-full" immediate>
               <h2 className="text-2xl font-bold mb-6">Start New Chat</h2>
               {agents.length === 0 ? (
                 <div className="text-center py-6">

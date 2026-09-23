@@ -33,7 +33,7 @@ export default async function LedgerPage() {
       </Reveal>
 
       <Reveal immediate delay={0.1}>
-        <GlassCard className="p-6 mb-6">
+        <GlassCard className="p-6 mb-6" immediate>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <FileText className="w-6 h-6 text-accent-teal" />
@@ -53,7 +53,7 @@ export default async function LedgerPage() {
       <div className="space-y-3">
         {entries.map((entry, index) => (
           <Reveal immediate key={entry.id} delay={0.2} index={index} stagger={60}>
-            <GlassCard className="p-4">
+            <GlassCard className="p-4" immediate>
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-1">
@@ -88,7 +88,7 @@ export default async function LedgerPage() {
 
         {entries.length === 0 && (
           <Reveal immediate delay={0.2}>
-            <GlassCard className="p-12 text-center">
+            <GlassCard className="p-12 text-center" immediate>
             <FileText className="w-12 h-12 mx-auto mb-4 text-foreground/30" />
             <p className="text-foreground/60">
               No actions logged yet. Agent operations will appear here.
