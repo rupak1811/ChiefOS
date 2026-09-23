@@ -114,7 +114,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div>
+    <div className="w-full">
       <Reveal immediate>
         <div className="flex items-center justify-between mb-8">
           <div>
