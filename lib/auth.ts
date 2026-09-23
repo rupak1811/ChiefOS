@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async session({ session, user }) {
-      if (session.user) {
+      if (session.user && user?.id) {
         // Only expose user ID and kill switch status
         // Never expose access_token or refresh_token
         session.user.id = user.id;

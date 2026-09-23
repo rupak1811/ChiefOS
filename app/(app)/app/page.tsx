@@ -9,6 +9,10 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
+  if (!userId) {
+    throw new Error("User session is missing user ID. Please sign in again.");
+  }
+
   const [agents, pendingApprovals, recentLedger, user] = await Promise.all([
     prisma.agent.findMany({ where: { isActive: true } }),
     prisma.approval.count({ where: { userId, status: "pending" } }),

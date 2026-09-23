@@ -9,6 +9,10 @@ export default async function LedgerPage() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
+  if (!userId) {
+    throw new Error("User session is missing user ID. Please sign in again.");
+  }
+
   const entries = await prisma.actionLedger.findMany({
     where: { userId },
     orderBy: { timestamp: "desc" },

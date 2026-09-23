@@ -10,6 +10,10 @@ export default async function ApprovalsPage() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
+  if (!userId) {
+    throw new Error("User session is missing user ID. Please sign in again.");
+  }
+
   const approvals = await prisma.approval.findMany({
     where: { userId },
     orderBy: { createdAt: "desc" },

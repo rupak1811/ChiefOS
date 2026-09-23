@@ -9,6 +9,10 @@ export default async function KillSwitchPage() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
 
+  if (!userId) {
+    throw new Error("User session is missing user ID. Please sign in again.");
+  }
+
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { killSwitch: true },
