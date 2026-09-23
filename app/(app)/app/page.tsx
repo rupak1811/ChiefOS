@@ -136,7 +136,7 @@ export default async function DashboardPage() {
             {recentLedger.map((entry) => (
               <div key={entry.id} className="p-4 glass-morphism rounded-xl">
                 <div className="flex items-start justify-between mb-2">
-                  <p className="font-medium">{entry.agent.name}</p>
+                  <p className="font-medium">{entry.agent?.name ?? 'Unknown'}</p>
                   <span className="text-xs text-foreground/50">
                     {new Date(entry.timestamp).toLocaleTimeString()}
                   </span>

@@ -2,10 +2,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import GlassCard from "@/components/GlassCard";
+import Button from "@/components/Button";
 import Reveal from "@/components/motion/Reveal";
 import Link from "next/link";
 import { Brain, Database, Code2, Shield, Bot, Plus, FolderKanban } from "lucide-react";
-import Button from "@/components/Button";
 
 const agentIcons = {
   Lead: Brain,
@@ -52,7 +52,7 @@ export default async function AgentsPage() {
               Your AI teammates with specialized roles and capabilities
             </p>
           </div>
-          <Button onClick={() => alert("Create agent wizard - navigate to a project to create agents")}>
+          <Button href="/app/agents/new" variant="primary">
             <Plus className="w-5 h-5 mr-2" />
             New Agent
           </Button>
