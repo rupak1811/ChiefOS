@@ -19,8 +19,8 @@ export default async function AppLayout({
       <div className="fixed inset-0 water-mesh -z-10" />
       <div className="fixed inset-0 water-caustics -z-10" />
       <AppSidebar user={session.user} />
-      <main className="pl-64 h-screen overflow-hidden flex flex-col">
-        <div className="flex-1 min-h-0 p-8 overflow-auto">
+      <main className="pl-64 h-screen overflow-hidden">
+        <div className="h-full w-full p-8 overflow-y-auto overflow-x-hidden">
           {children}
         </div>
       </main>

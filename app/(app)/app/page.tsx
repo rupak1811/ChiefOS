@@ -27,7 +27,7 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div>
+    <div className="w-full">
       <Reveal immediate>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
