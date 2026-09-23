@@ -132,7 +132,7 @@ export default function ProjectsPage() {
 
       {projects.length === 0 ? (
         <Reveal immediate delay={0.1}>
-          <GlassCard className="p-12 text-center">
+          <GlassCard className="p-12 text-center" immediate>
             <FolderKanban className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No projects yet</h3>
             <p className="text-foreground/60 mb-6">
@@ -152,7 +152,7 @@ export default function ProjectsPage() {
                 className="cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => router.push(`/app/p/${project.slug}`)}
               >
-              <GlassCard className="p-6">
+              <GlassCard className="p-6" immediate>
                 <div className="flex items-start justify-between mb-4">
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center"
@@ -208,7 +208,7 @@ export default function ProjectsPage() {
           onClick={() => setShowCreateModal(false)}
         >
           <div onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-          <GlassCard className="p-8 max-w-lg w-full">
+          <GlassCard className="p-8 max-w-lg w-full" immediate>
             <h2 className="text-2xl font-bold mb-6">Create Project</h2>
             <form onSubmit={handleCreate} className="space-y-4">
               <div>

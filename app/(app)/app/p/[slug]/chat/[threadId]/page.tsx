@@ -154,7 +154,7 @@ export default function ChatThreadPage({ params }: PageProps) {
       </div>
 
       {/* Messages */}
-      <GlassCard className="flex-1 flex flex-col mb-4 min-h-0">
+      <GlassCard className="flex-1 flex flex-col mb-4 min-h-0" immediate>
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="space-y-4">
           {thread.messages.length === 0 ? (

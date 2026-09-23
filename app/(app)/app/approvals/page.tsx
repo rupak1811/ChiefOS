@@ -52,7 +52,7 @@ export default async function ApprovalsPage() {
           <div className="space-y-4">
             {pending.map((approval, index) => (
               <Reveal immediate key={approval.id} delay={0.15} index={index} stagger={60}>
-                <GlassCard className="p-6">
+                <GlassCard className="p-6" immediate>
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
@@ -83,7 +83,7 @@ export default async function ApprovalsPage() {
             ))}
             {pending.length === 0 && (
               <Reveal immediate delay={0.15}>
-                <GlassCard className="p-8 text-center">
+                <GlassCard className="p-8 text-center" immediate>
                 <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-400/50" />
                 <p className="text-foreground/60">Done—no approvals waiting</p>
                 </GlassCard>
@@ -99,7 +99,7 @@ export default async function ApprovalsPage() {
           <div className="space-y-3">
             {resolved.slice(0, 10).map((approval, index) => (
               <Reveal immediate key={approval.id} delay={0.25} index={index} stagger={50}>
-                <GlassCard className="p-4">
+                <GlassCard className="p-4" immediate>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">

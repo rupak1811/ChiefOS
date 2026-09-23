@@ -71,7 +71,7 @@ export default async function ProjectTeamsPage({ params }: { params: Promise<{ s
 
       {project.teams.length === 0 ? (
         <Reveal immediate delay={0.1}>
-          <GlassCard className="p-12 text-center">
+          <GlassCard className="p-12 text-center" immediate>
             <Users className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No teams yet</h3>
             <p className="text-foreground/60 mb-6">
@@ -90,7 +90,7 @@ export default async function ProjectTeamsPage({ params }: { params: Promise<{ s
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {project.teams.map((team, i) => (
             <Reveal immediate key={team.id} delay={0.1} index={i} stagger={80}>
-              <GlassCard className="p-6">
+              <GlassCard className="p-6" immediate>
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                     <Users className="w-6 h-6 text-white" />

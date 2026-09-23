@@ -59,7 +59,7 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Reveal delay={0.15} index={0} stagger={80} immediate>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Active Agents</h3>
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center">
@@ -74,7 +74,7 @@ export default async function DashboardPage() {
         </Reveal>
 
         <Reveal delay={0.15} index={1} stagger={80} immediate>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Pending Approvals</h3>
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
         </Reveal>
 
         <Reveal delay={0.15} index={2} stagger={80} immediate>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Actions Logged</h3>
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
@@ -108,7 +108,7 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Reveal delay={0.3} immediate>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
           <h3 className="text-xl font-bold mb-4">Active Agents</h3>
           <div className="space-y-3">
             {agents.map((agent) => (
@@ -135,7 +135,7 @@ export default async function DashboardPage() {
         </Reveal>
 
         <Reveal delay={0.3} immediate>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
           <h3 className="text-xl font-bold mb-4">Recent Activity</h3>
           <div className="space-y-3">
             {recentLedger.map((entry) => (

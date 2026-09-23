@@ -62,7 +62,7 @@ export default async function AgentsPage() {
 
       {agents.length === 0 ? (
         <Reveal immediate delay={0.1}>
-          <GlassCard className="p-12 text-center">
+          <GlassCard className="p-12 text-center" immediate>
             <Bot className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No agents yet</h3>
             <p className="text-foreground/60 mb-6">
@@ -84,7 +84,7 @@ export default async function AgentsPage() {
             
             return (
               <Reveal immediate key={agent.id} delay={0.1} index={index} stagger={80}>
-                <GlassCard className="p-6">
+                <GlassCard className="p-6" immediate>
                   <div className="flex items-start gap-4 mb-4">
                     <div
                       className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl"

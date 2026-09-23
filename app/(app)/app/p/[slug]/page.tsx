@@ -86,7 +86,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <Reveal immediate delay={0.1} index={0} stagger={60}>
           <Link href={`/app/p/${slug}/agents`}>
-            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
+            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer" immediate>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center">
                   <Bot className="w-5 h-5 text-white" />
@@ -102,7 +102,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <Reveal immediate delay={0.1} index={1} stagger={60}>
           <Link href={`/app/p/${slug}/teams`}>
-            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
+            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer" immediate>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                   <Users className="w-5 h-5 text-white" />
@@ -118,7 +118,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <Reveal immediate delay={0.1} index={2} stagger={60}>
           <Link href={`/app/p/${slug}/chat`}>
-            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
+            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer" immediate>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
                   <MessageSquare className="w-5 h-5 text-white" />
@@ -134,7 +134,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <Reveal immediate delay={0.1} index={3} stagger={60}>
           <Link href={`/app/p/${slug}/tasks`}>
-            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
+            <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer" immediate>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center">
                   <ListTodo className="w-5 h-5 text-white" />
@@ -176,7 +176,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Agents */}
         <Reveal immediate delay={0.3}>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold">Agents</h3>
               <Link
@@ -234,7 +234,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* Recent Tasks */}
         <Reveal immediate delay={0.3}>
-          <GlassCard className="p-6">
+          <GlassCard className="p-6" immediate>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold">Recent Tasks</h3>
               <Link
