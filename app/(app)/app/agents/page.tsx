@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import GlassCard from "@/components/GlassCard";
+import Button from "@/components/Button";
 import Reveal from "@/components/motion/Reveal";
 import { Brain, Database, Code2, Shield } from "lucide-react";
 
@@ -25,11 +26,16 @@ export default async function AgentsPage() {
   return (
     <div>
       <Reveal>
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Agents</h1>
-          <p className="text-foreground/70">
-            Your specialized agent fleet with defined capabilities
-          </p>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Agents</h1>
+            <p className="text-foreground/70">
+              Your specialized agent fleet with defined capabilities
+            </p>
+          </div>
+          <Button href="/app/agents/new" variant="primary">
+            Create New Agent
+          </Button>
         </div>
       </Reveal>
 

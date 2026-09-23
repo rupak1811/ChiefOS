@@ -119,7 +119,7 @@ model Approval {
 model ActionLedger {
   id              String   @id @default(cuid())
   userId          String
-  agentId         String
+  agentId         String?
   action          String
   scope           String
   metadata        String?
@@ -129,8 +129,8 @@ model ActionLedger {
   toolArgsHash    String?
   hitl            Boolean  @default(false)
   
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent Agent? @relation(fields: [agentId], references: [id], onDelete: SetNull)
 }
 
 model Contact {
