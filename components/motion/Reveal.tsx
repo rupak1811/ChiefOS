@@ -36,7 +36,8 @@ export default function Reveal({
   
   const totalDelay = delay + (stagger * index);
 
-  if (prefersReducedMotion) {
+  // Skip animation wrapper entirely for immediate mode or reduced motion
+  if (prefersReducedMotion || immediate) {
     return <div className={className}>{children}</div>;
   }
 
@@ -52,9 +53,8 @@ export default function Reveal({
     <motion.div
       className={className}
       initial={initialState}
-      animate={immediate ? animateState : undefined}
-      whileInView={immediate ? undefined : animateState}
-      viewport={immediate ? undefined : revealAnimation.viewport}
+      whileInView={animateState}
+      viewport={revealAnimation.viewport}
       transition={{
         ...revealAnimation.transition,
         delay: totalDelay,

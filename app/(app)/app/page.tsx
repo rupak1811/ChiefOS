@@ -33,7 +33,7 @@ export default async function DashboardPage() {
       </Reveal>
 
       {user?.killSwitch && (
-        <Reveal immediate delay={0.1} immediate>
+        <Reveal delay={0.1} immediate>
           <div className="mb-6 p-4 glass-morphism border-2 border-red-500/50 rounded-xl flex items-center gap-3">
           <AlertTriangle className="w-6 h-6 text-red-400" />
           <div className="flex-1">
@@ -53,7 +53,7 @@ export default async function DashboardPage() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Reveal immediate delay={0.15} index={0} stagger={80} immediate>
+        <Reveal delay={0.15} index={0} stagger={80} immediate>
           <GlassCard className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Active Agents</h3>
@@ -68,7 +68,7 @@ export default async function DashboardPage() {
           </GlassCard>
         </Reveal>
 
-        <Reveal immediate delay={0.15} index={1} stagger={80} immediate>
+        <Reveal delay={0.15} index={1} stagger={80} immediate>
           <GlassCard className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Pending Approvals</h3>
@@ -83,7 +83,7 @@ export default async function DashboardPage() {
           </GlassCard>
         </Reveal>
 
-        <Reveal immediate delay={0.15} index={2} stagger={80} immediate>
+        <Reveal delay={0.15} index={2} stagger={80} immediate>
           <GlassCard className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Actions Logged</h3>
@@ -102,7 +102,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Reveal immediate delay={0.3} immediate>
+        <Reveal delay={0.3} immediate>
           <GlassCard className="p-6">
           <h3 className="text-xl font-bold mb-4">Active Agents</h3>
           <div className="space-y-3">
@@ -129,7 +129,7 @@ export default async function DashboardPage() {
           </GlassCard>
         </Reveal>
 
-        <Reveal immediate delay={0.3} immediate>
+        <Reveal delay={0.3} immediate>
           <GlassCard className="p-6">
           <h3 className="text-xl font-bold mb-4">Recent Activity</h3>
           <div className="space-y-3">
