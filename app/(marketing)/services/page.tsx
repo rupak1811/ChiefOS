@@ -62,29 +62,29 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 md:mb-16"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
             <span className="text-gradient">Services</span>
           </h1>
-          <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto px-2">
             A specialised fleet of intelligent agents, each with defined
             capabilities and strict permission boundaries.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-10 sm:mb-12 md:mb-16">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <GlassCard key={index} hover className="p-0 overflow-hidden">
                 {service.image && (
-                  <div className="relative h-64 w-full overflow-hidden">
+                  <div className="relative h-48 sm:h-56 md:h-64 w-full overflow-hidden">
                     <img
                       src={service.image}
                       alt={service.title}
@@ -93,10 +93,10 @@ export default function ServicesPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-base via-base/50 to-transparent" />
                   </div>
                 )}
-                <div className="p-8">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-7 h-7 text-white" />
+                <div className="p-4 sm:p-6 md:p-8">
+                  <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                     </div>
                   <div>
                     <h3 className="font-display text-h3 mb-2">{service.title}</h3>
@@ -104,13 +104,13 @@ export default function ServicesPage() {
                   </div>
                 </div>
 
-                  <div className="mb-6">
-                    <h4 className="font-semibold mb-3 text-accent">
+                  <div className="mb-4 sm:mb-6">
+                    <h4 className="font-semibold mb-2 sm:mb-3 text-accent text-sm sm:text-base">
                       Capabilities
                     </h4>
-                    <ul className="space-y-2">
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {service.capabilities.map((capability, i) => (
-                        <li key={i} className="flex items-start text-sm">
+                        <li key={i} className="flex items-start text-xs sm:text-sm">
                           <span className="text-accent mr-2">•</span>
                           <span className="text-ink-muted">{capability}</span>
                         </li>
@@ -119,14 +119,14 @@ export default function ServicesPage() {
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-3 text-accent">
+                    <h4 className="font-semibold mb-2 sm:mb-3 text-accent text-sm sm:text-base">
                       Permission Scopes
                     </h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {service.scopes.map((scope, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1 glass border-glass-border rounded-lg text-xs font-mono"
+                          className="px-2 sm:px-3 py-1 glass border-glass-border rounded-lg text-xs font-mono"
                         >
                           {scope}
                         </span>
@@ -145,47 +145,47 @@ export default function ServicesPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <GlassCard className="p-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <GlassCard className="p-6 sm:p-8 md:p-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
               <div>
-                <h2 className="text-3xl font-bold mb-4">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
                   Enterprise-grade security
                 </h2>
-                <p className="text-foreground/70 mb-6">
+                <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-6">
                   Every agent operation flows through our permission system.
-                  Sensitive scopes like <code className="px-2 py-1 bg-white/10 rounded">code:write</code> and{" "}
-                  <code className="px-2 py-1 bg-white/10 rounded">send:*</code>{" "}
+                  Sensitive scopes like <code className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/10 rounded text-xs sm:text-sm">code:write</code> and{" "}
+                  <code className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/10 rounded text-xs sm:text-sm">send:*</code>{" "}
                   require explicit approval in your dashboard.
                 </p>
                 <a
                   href="/how-we-work"
-                  className="text-accent-teal hover:text-accent-blue transition-colors"
+                  className="text-sm sm:text-base text-accent-teal hover:text-accent-blue transition-colors"
                 >
                   See how it works →
                 </a>
               </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-4 glass-morphism rounded-xl">
-                  <span className="text-sm">Capability Tokens</span>
-                  <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-lg text-xs">
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex items-center justify-between p-3 sm:p-4 glass-morphism rounded-xl">
+                  <span className="text-xs sm:text-sm">Capability Tokens</span>
+                  <span className="px-2 sm:px-3 py-1 bg-green-500/20 text-green-400 rounded-lg text-xs">
                     Active
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-4 glass-morphism rounded-xl">
-                  <span className="text-sm">Approval Queue</span>
-                  <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-xs">
+                <div className="flex items-center justify-between p-3 sm:p-4 glass-morphism rounded-xl">
+                  <span className="text-xs sm:text-sm">Approval Queue</span>
+                  <span className="px-2 sm:px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-xs">
                     Monitored
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-4 glass-morphism rounded-xl">
-                  <span className="text-sm">Action Ledger</span>
-                  <span className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-lg text-xs">
+                <div className="flex items-center justify-between p-3 sm:p-4 glass-morphism rounded-xl">
+                  <span className="text-xs sm:text-sm">Action Ledger</span>
+                  <span className="px-2 sm:px-3 py-1 bg-purple-500/20 text-purple-400 rounded-lg text-xs">
                     Logging
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-4 glass-morphism rounded-xl">
-                  <span className="text-sm">Kill Switch</span>
-                  <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs">
+                <div className="flex items-center justify-between p-3 sm:p-4 glass-morphism rounded-xl">
+                  <span className="text-xs sm:text-sm">Kill Switch</span>
+                  <span className="px-2 sm:px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs">
                     Ready
                   </span>
                 </div>

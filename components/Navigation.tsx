@@ -31,8 +31,8 @@ export default function Navigation() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 water-glass water-glass--heavy border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center">
+        <div className="flex items-center justify-between h-14 sm:h-16">
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Logo size="nav" showText={true} usePNG={true} />
           </Link>
 
@@ -41,7 +41,7 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 rounded-full relative text-nav"
+                className="px-3 lg:px-4 py-2 rounded-full relative text-nav"
                 style={colorStyle}
                 onMouseEnter={() => setHoveredLink(link.href)}
                 onMouseLeave={() => setHoveredLink(null)}
@@ -61,7 +61,7 @@ export default function Navigation() {
             <button
               onClick={() => signIn("google", { callbackUrl: "/app" })}
               onPointerDown={spawnRipple}
-              className="ml-4 px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] font-semibold relative overflow-hidden transition-all"
+              className="ml-2 lg:ml-4 px-4 lg:px-6 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] font-semibold relative overflow-hidden transition-all text-sm lg:text-base"
               style={{
                 transitionDuration: `${MOTION.duration.hover}ms`,
                 transitionTimingFunction: MOTION.easing.fluidCubic,
@@ -72,25 +72,26 @@ export default function Navigation() {
           </div>
 
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X /> : <Menu />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {mobileMenuOpen && (
         <div className="md:hidden water-glass water-glass--heavy border-t border-white/10">
-          <div className="px-4 py-4 space-y-2">
+          <div className="px-4 py-3 space-y-1 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block px-4 py-2 rounded-lg ${
+                className={`block px-4 py-2.5 rounded-lg text-sm ${
                   pathname === link.href
                     ? "bg-white/10 text-accent"
-                    : "text-foreground/70"
+                    : "text-foreground/70 hover:bg-white/5"
                 }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -103,7 +104,7 @@ export default function Navigation() {
                 signIn("google", { callbackUrl: "/app" });
               }}
               onPointerDown={spawnRipple}
-              className="w-full px-4 py-2 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] font-semibold relative overflow-hidden active:scale-[0.98] transition-transform"
+              className="w-full px-4 py-2.5 text-center rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] font-semibold relative overflow-hidden active:scale-[0.98] transition-transform text-sm"
               style={{
                 transitionDuration: `${MOTION.duration.press}ms`,
               }}
