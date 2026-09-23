@@ -4,10 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, 
+  FolderKanban,
+  Users,
   Bot, 
+  MessageSquare,
   CheckSquare, 
   FileText, 
-  MessageSquare,
   HelpCircle,
   Power,
   LogOut 
@@ -19,11 +21,13 @@ import LiquidPill from "@/components/motion/LiquidPill";
 import Logo from "./Logo";
 
 const navItems = [
-  { href: "/app", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/app", label: "Home", icon: LayoutDashboard },
+  { href: "/app/projects", label: "Projects", icon: FolderKanban },
+  { href: "/app/teams", label: "Teams", icon: Users },
   { href: "/app/agents", label: "Agents", icon: Bot },
+  { href: "/app/chat", label: "Chat", icon: MessageSquare },
   { href: "/app/approvals", label: "Approvals", icon: CheckSquare },
   { href: "/app/ledger", label: "Ledger", icon: FileText },
-  { href: "/app/chat", label: "Chat", icon: MessageSquare },
   { href: "/app/help", label: "Help", icon: HelpCircle },
 ];
 
@@ -40,14 +44,14 @@ export default function AppSidebar({ user }: AppSidebarProps) {
   const spawnRipple = useRipple();
 
   return (
-    <aside className="w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col">
-      <div className="p-6">
+    <aside className="fixed left-0 top-0 bottom-0 w-64 water-glass water-glass--heavy border-r border-white/10 flex flex-col z-40">
+      <div className="p-6 flex-shrink-0">
         <Link href="/app" className="flex items-center">
           <Logo size="nav" showText={true} usePNG={true} />
         </Link>
       </div>
 
-      <nav className="flex-1 px-4 space-y-1 relative">
+      <nav className="flex-1 px-4 space-y-1 relative overflow-y-auto overflow-x-hidden">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -56,7 +60,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
               key={item.href}
               href={item.href}
               onPointerDown={spawnRipple}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl relative overflow-hidden transition-all hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] ${
+              className={`flex items-center space-x-3 px-4 h-11 rounded-xl relative overflow-hidden transition-all hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] ${
                 isActive
                   ? "text-foreground"
                   : "text-foreground/70 hover:text-foreground"
@@ -76,11 +80,11 @@ export default function AppSidebar({ user }: AppSidebarProps) {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-white/10 flex-shrink-0">
         <Link
           href="/app/kill-switch"
           onPointerDown={spawnRipple}
-          className="flex items-center space-x-3 px-4 py-3 rounded-xl mb-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] relative overflow-hidden transition-all"
+          className="flex items-center space-x-3 px-4 h-11 rounded-xl mb-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] relative overflow-hidden transition-all"
           style={{
             transitionDuration: `${MOTION.duration.hover}ms`,
             transitionTimingFunction: MOTION.easing.fluidCubic,

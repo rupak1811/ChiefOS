@@ -52,7 +52,7 @@ export default async function LedgerPage() {
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-1">
-                  <p className="font-medium">{entry.agent.name}</p>
+                  <p className="font-medium">{entry.agent?.name ?? 'Unknown'}</p>
                   <span className="text-xs text-foreground/50">
                     {new Date(entry.timestamp).toLocaleString()}
                   </span>
