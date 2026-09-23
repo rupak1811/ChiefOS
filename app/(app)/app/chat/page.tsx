@@ -63,9 +63,9 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex flex-col">
+    <div className="h-full flex flex-col">
       <Reveal>
-        <div className="mb-4">
+        <div className="mb-4 flex-shrink-0">
           <h1 className="text-3xl font-bold mb-2">Talk to Lead</h1>
           <p className="text-foreground/70">
             Your orchestrator agent for planning and co-ordination
@@ -74,7 +74,7 @@ export default function ChatPage() {
       </Reveal>
 
       <Reveal delay={0.1}>
-        <GlassCard className="flex-1 flex flex-col p-0 overflow-hidden">
+        <GlassCard className="flex-1 flex flex-col p-0 overflow-hidden min-h-0">
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center">

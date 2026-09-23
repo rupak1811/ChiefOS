@@ -15,7 +15,7 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="flex min-h-screen relative">
+    <div className="flex h-screen overflow-hidden relative">
       <div className="fixed inset-0 water-mesh -z-10" />
       <div className="fixed inset-0 water-caustics -z-10" />
       <AppSidebar user={session.user} />
