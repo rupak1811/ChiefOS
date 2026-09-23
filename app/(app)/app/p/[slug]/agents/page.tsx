@@ -1,88 +1,86 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
 import GlassCard from "@/components/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import Link from "next/link";
-import { Brain, Database, Code2, Shield, Bot, Plus, FolderKanban } from "lucide-react";
-import Button from "@/components/Button";
+import { Bot, Plus, Trash2 } from "lucide-react";
 
-const agentIcons = {
-  Lead: Brain,
-  Memory: Database,
-  Code: Code2,
-  Guardian: Shield,
-};
-
-export default async function AgentsPage() {
+export default async function ProjectAgentsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return null;
   }
 
-  const agents = await prisma.agent.findMany({
+  const project = await prisma.project.findFirst({
     where: {
+      slug,
       userId: session.user.id,
     },
     include: {
-      project: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
-      },
-      _count: {
-        select: {
-          chatThreads: true,
-          workItems: true,
+      agents: {
+        where: { isActive: true },
+        orderBy: { createdAt: "desc" },
+        include: {
+          _count: {
+            select: {
+              chatThreads: true,
+              workItems: true,
+            },
+          },
         },
       },
     },
-    orderBy: { createdAt: "desc" },
   });
+
+  if (!project) {
+    notFound();
+  }
 
   return (
     <div>
       <Reveal>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Agents</h1>
+            <h1 className="text-3xl font-bold mb-2">AI Teammates</h1>
             <p className="text-foreground/70">
-              Your AI teammates with specialized roles and capabilities
+              Manage agents in {project.name}
             </p>
           </div>
-          <Button onClick={() => alert("Create agent wizard - navigate to a project to create agents")}>
-            <Plus className="w-5 h-5 mr-2" />
-            New Agent
-          </Button>
+          <Link href={`/app/p/${slug}/agents/new`}>
+            <button className="px-6 h-11 rounded-xl bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center gap-2">
+              <Plus className="w-5 h-5" />
+              New Agent
+            </button>
+          </Link>
         </div>
       </Reveal>
 
-      {agents.length === 0 ? (
+      {project.agents.length === 0 ? (
         <Reveal delay={0.1}>
           <GlassCard className="p-12 text-center">
             <Bot className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No agents yet</h3>
             <p className="text-foreground/60 mb-6">
-              Create your first AI teammates to help with projects and tasks
+              Create your first AI teammate for this project
             </p>
-            <Link href="/app/projects">
-              <Button>
-                <FolderKanban className="w-5 h-5 mr-2" />
-                Go to Projects
-              </Button>
+            <Link href={`/app/p/${slug}/agents/new`}>
+              <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all inline-flex items-center gap-2">
+                <Plus className="w-5 h-5" />
+                Create Agent
+              </button>
             </Link>
           </GlassCard>
         </Reveal>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {agents.map((agent, index) => {
-            const Icon = agentIcons[agent.name as keyof typeof agentIcons] || Bot;
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {project.agents.map((agent, i) => {
             const capabilities = agent.capabilities ? JSON.parse(agent.capabilities) : [];
             
             return (
-              <Reveal key={agent.id} delay={0.1} index={index} stagger={80}>
+              <Reveal key={agent.id} delay={0.1} index={i} stagger={80}>
                 <GlassCard className="p-6">
                   <div className="flex items-start gap-4 mb-4">
                     <div
@@ -99,15 +97,6 @@ export default async function AgentsPage() {
                             <p className="text-sm text-accent-teal">{agent.title}</p>
                           )}
                         </div>
-                        <span
-                          className={`px-3 py-1 rounded-lg text-xs whitespace-nowrap ${
-                            agent.status === "active"
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-gray-500/20 text-gray-400"
-                          }`}
-                        >
-                          {agent.status}
-                        </span>
                       </div>
                       <p className="text-foreground/70 text-sm line-clamp-2">
                         {agent.description}
@@ -115,21 +104,12 @@ export default async function AgentsPage() {
                     </div>
                   </div>
 
-                  {agent.project && (
-                    <Link href={`/app/p/${agent.project.slug}`}>
-                      <div className="flex items-center gap-2 mb-3 text-sm text-foreground/70 hover:text-accent-teal transition-colors">
-                        <FolderKanban className="w-4 h-4" />
-                        <span>{agent.project.name}</span>
-                      </div>
-                    </Link>
-                  )}
-
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-accent-teal mb-2">
                       Capabilities
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {capabilities.map((cap: string, i: number) => (
+                      {capabilities.slice(0, 3).map((cap: string, i: number) => (
                         <span
                           key={i}
                           className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono"
@@ -137,6 +117,11 @@ export default async function AgentsPage() {
                           {cap}
                         </span>
                       ))}
+                      {capabilities.length > 3 && (
+                        <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs">
+                          +{capabilities.length - 3} more
+                        </span>
+                      )}
                     </div>
                   </div>
 
