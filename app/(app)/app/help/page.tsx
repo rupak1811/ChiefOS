@@ -58,7 +58,7 @@ const faqs = [
 export default function HelpPage() {
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Help</h1>
           <p className="text-foreground/70">
@@ -71,7 +71,7 @@ export default function HelpPage() {
         {faqs.map((faq, index) => {
           const Icon = faq.icon;
           return (
-            <Reveal key={index} delay={0.1} index={index} stagger={70}>
+            <Reveal immediate key={index} delay={0.1} index={index} stagger={70}>
               <GlassCard className="p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-teal to-accent-blue flex items-center justify-center flex-shrink-0">
@@ -88,7 +88,7 @@ export default function HelpPage() {
         })}
       </div>
 
-      <Reveal delay={0.8}>
+      <Reveal immediate delay={0.8}>
         <GlassCard className="mt-8 p-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
         <p className="text-foreground/70 mb-6">

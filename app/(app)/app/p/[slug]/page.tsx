@@ -63,7 +63,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-3">
             <div
@@ -84,7 +84,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <Reveal delay={0.1} index={0} stagger={60}>
+        <Reveal immediate delay={0.1} index={0} stagger={60}>
           <Link href={`/app/p/${slug}/agents`}>
             <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-center gap-3">
@@ -100,7 +100,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Link>
         </Reveal>
 
-        <Reveal delay={0.1} index={1} stagger={60}>
+        <Reveal immediate delay={0.1} index={1} stagger={60}>
           <Link href={`/app/p/${slug}/teams`}>
             <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-center gap-3">
@@ -116,7 +116,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Link>
         </Reveal>
 
-        <Reveal delay={0.1} index={2} stagger={60}>
+        <Reveal immediate delay={0.1} index={2} stagger={60}>
           <Link href={`/app/p/${slug}/chat`}>
             <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Link>
         </Reveal>
 
-        <Reveal delay={0.1} index={3} stagger={60}>
+        <Reveal immediate delay={0.1} index={3} stagger={60}>
           <Link href={`/app/p/${slug}/tasks`}>
             <GlassCard className="p-4 hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-center gap-3">
@@ -150,7 +150,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* Quick Actions */}
-      <Reveal delay={0.2}>
+      <Reveal immediate delay={0.2}>
         <div className="flex flex-wrap gap-3 mb-8">
           <Link href={`/app/p/${slug}/agents/new`}>
             <button className="px-6 h-11 rounded-xl bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center gap-2">
@@ -175,7 +175,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Agents */}
-        <Reveal delay={0.3}>
+        <Reveal immediate delay={0.3}>
           <GlassCard className="p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold">Agents</h3>
@@ -233,7 +233,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </Reveal>
 
         {/* Recent Tasks */}
-        <Reveal delay={0.3}>
+        <Reveal immediate delay={0.3}>
           <GlassCard className="p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold">Recent Tasks</h3>

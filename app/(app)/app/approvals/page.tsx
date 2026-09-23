@@ -27,7 +27,7 @@ export default async function ApprovalsPage() {
 
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Approvals</h1>
           <p className="text-foreground/70">
@@ -38,7 +38,7 @@ export default async function ApprovalsPage() {
 
       <div className="space-y-6">
         <div>
-          <Reveal delay={0.1}>
+          <Reveal immediate delay={0.1}>
             <h2 className="text-xl font-bold mb-4 flex items-center">
               <Clock className="w-5 h-5 mr-2 text-yellow-400" />
               Waiting on you ({pending.length})
@@ -46,7 +46,7 @@ export default async function ApprovalsPage() {
           </Reveal>
           <div className="space-y-4">
             {pending.map((approval, index) => (
-              <Reveal key={approval.id} delay={0.15} index={index} stagger={60}>
+              <Reveal immediate key={approval.id} delay={0.15} index={index} stagger={60}>
                 <GlassCard className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
@@ -77,7 +77,7 @@ export default async function ApprovalsPage() {
               </Reveal>
             ))}
             {pending.length === 0 && (
-              <Reveal delay={0.15}>
+              <Reveal immediate delay={0.15}>
                 <GlassCard className="p-8 text-center">
                 <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-400/50" />
                 <p className="text-foreground/60">Done—no approvals waiting</p>
@@ -88,12 +88,12 @@ export default async function ApprovalsPage() {
         </div>
 
         <div>
-          <Reveal delay={0.2}>
+          <Reveal immediate delay={0.2}>
             <h2 className="text-xl font-bold mb-4">Recent History</h2>
           </Reveal>
           <div className="space-y-3">
             {resolved.slice(0, 10).map((approval, index) => (
-              <Reveal key={approval.id} delay={0.25} index={index} stagger={50}>
+              <Reveal immediate key={approval.id} delay={0.25} index={index} stagger={50}>
                 <GlassCard className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">

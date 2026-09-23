@@ -41,7 +41,7 @@ export default async function ProjectAgentsPage({ params }: { params: Promise<{ 
 
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">AI Teammates</h1>
@@ -59,7 +59,7 @@ export default async function ProjectAgentsPage({ params }: { params: Promise<{ 
       </Reveal>
 
       {project.agents.length === 0 ? (
-        <Reveal delay={0.1}>
+        <Reveal immediate delay={0.1}>
           <GlassCard className="p-12 text-center">
             <Bot className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No agents yet</h3>
@@ -80,7 +80,7 @@ export default async function ProjectAgentsPage({ params }: { params: Promise<{ 
             const capabilities = agent.capabilities ? JSON.parse(agent.capabilities) : [];
             
             return (
-              <Reveal key={agent.id} delay={0.1} index={i} stagger={80}>
+              <Reveal immediate key={agent.id} delay={0.1} index={i} stagger={80}>
                 <GlassCard className="p-6">
                   <div className="flex items-start gap-4 mb-4">
                     <div
