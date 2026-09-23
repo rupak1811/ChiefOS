@@ -29,18 +29,42 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
-    async session({ session, user }) {
-      if (session.user) {
-        // Only expose user ID and kill switch status
-        // Never expose access_token or refresh_token
-        session.user.id = user.id;
+    async session({ session, user, token }) {
+      if (!session.user) {
+        return session;
+      }
+
+      // With database sessions, user should always be provided
+      // But if somehow it's not, look up by email as fallback
+      let userId: string | undefined = user?.id;
+      
+      if (!userId && session.user.email) {
         const dbUser = await prisma.user.findUnique({
-          where: { id: user.id },
+          where: { email: session.user.email },
+          select: { id: true, killSwitch: true },
+        });
+        if (dbUser) {
+          userId = dbUser.id;
+          session.user.id = dbUser.id;
+          (session.user as any).killSwitch = dbUser.killSwitch || false;
+          return session;
+        }
+      }
+
+      if (userId) {
+        // Normal path: user.id is available
+        session.user.id = userId;
+        const dbUser = await prisma.user.findUnique({
+          where: { id: userId },
           select: { killSwitch: true },
         });
         (session.user as any).killSwitch = dbUser?.killSwitch || false;
+        return session;
       }
-      return session;
+
+      // No user ID available - invalidate session to force re-auth
+      // Return session without user to trigger layout redirect
+      return { ...session, user: undefined as any };
     },
   },
   pages: {

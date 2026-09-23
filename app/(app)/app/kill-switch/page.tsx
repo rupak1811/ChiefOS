@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import GlassCard from "@/components/GlassCard";
@@ -8,6 +9,10 @@ import { AlertTriangle, Shield } from "lucide-react";
 export default async function KillSwitchPage() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
+
+  if (!userId) {
+    redirect("/api/auth/signin");
+  }
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
