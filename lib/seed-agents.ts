@@ -1,13 +1,18 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 /**
- * Seed default agents for a user
- * This is now called from the app when a user first logs in
- * or can be run manually with npm run seed
+ * Seed default agents for a user on first login
  */
-async function seedAgentsForUser(userId: string) {
+export async function seedDefaultAgentsForUser(userId: string) {
+  // Check if user already has agents
+  const existingAgents = await prisma.agent.count({
+    where: { userId },
+  });
+
+  if (existingAgents > 0) {
+    return; // User already has agents
+  }
+
   const agents = [
     {
       userId,
@@ -59,44 +64,9 @@ async function seedAgentsForUser(userId: string) {
     },
   ];
 
-  for (const agent of agents) {
-    // Check if agent already exists for this user
-    const existing = await prisma.agent.findFirst({
-      where: { userId, name: agent.name },
-    });
-
-    if (!existing) {
-      await prisma.agent.create({ data: agent });
-      console.log(`✓ Created ${agent.name} agent for user ${userId}`);
-    }
-  }
-}
-
-async function main() {
-  console.log("ChiefOS seed script");
-  console.log("Note: Default agents are now created automatically on first login");
-  console.log("To manually seed agents for existing users, use the app interface");
-  
-  // Get first user if exists (for development)
-  const firstUser = await prisma.user.findFirst();
-  
-  if (firstUser) {
-    console.log(`\nSeeding default agents for user: ${firstUser.email}`);
-    await seedAgentsForUser(firstUser.id);
-    console.log("✓ Seeding complete");
-  } else {
-    console.log("\nNo users found. Agents will be created automatically on first login.");
-  }
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
+  await prisma.agent.createMany({
+    data: agents,
   });
 
-// Export for use in app
-export { seedAgentsForUser };
+  console.log(`✓ Seeded default agents for user ${userId}`);
+}

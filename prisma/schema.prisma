@@ -26,6 +26,11 @@ model User {
   approvals     Approval[]
   ledgerEntries ActionLedger[]
   killSwitch    Boolean   @default(false)
+  projects      Project[]
+  agents        Agent[]
+  chatThreads   ChatThread[]
+  chatMessages  ChatMessage[]
+  workItems     WorkItem[]
 }
 
 model Account {
@@ -76,15 +81,31 @@ model Memory {
 }
 
 model Agent {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  description String
+  id           String   @id @default(cuid())
+  userId       String
+  projectId    String?
+  name         String
+  title        String?
+  description  String
+  instructions String?
+  avatarColor  String   @default("#2DD4BF")
+  avatarShape  String   @default("circle")
+  status       String   @default("active")
   capabilities String
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project       Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
   tokens        CapabilityToken[]
   ledgerEntries ActionLedger[]
+  teamMembers   TeamMember[]
+  chatThreads   ChatThread[]
+  chatMessages  ChatMessage[]
+  workItems     WorkItem[]
+  
+  @@unique([userId, name])
 }
 
 model CapabilityToken {
@@ -140,4 +161,97 @@ model Contact {
   company   String?
   message   String
   createdAt DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  slug        String
+  description String?
+  color       String   @default("#2DD4BF")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teams       Team[]
+  agents      Agent[]
+  chatThreads ChatThread[]
+  workItems   WorkItem[]
+  
+  @@unique([userId, slug])
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  projectId   String?
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  project     Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  members     TeamMember[]
+  chatThreads ChatThread[]
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  teamId    String
+  agentId   String
+  role      String   @default("member")
+  createdAt DateTime @default(now())
+  
+  team  Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@unique([teamId, agentId])
+}
+
+model ChatThread {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String?
+  agentId   String?
+  teamId    String?
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project  Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  agent    Agent?        @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  team     Team?         @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  messages ChatMessage[]
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  threadId  String
+  userId    String
+  agentId   String?
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+  
+  thread ChatThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent  Agent?     @relation(fields: [agentId], references: [id], onDelete: SetNull)
+}
+
+model WorkItem {
+  id          String   @id @default(cuid())
+  userId      String
+  projectId   String?
+  agentId     String?
+  threadId    String?
+  title       String
+  description String?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  agent   Agent?   @relation(fields: [agentId], references: [id], onDelete: SetNull)
 }
