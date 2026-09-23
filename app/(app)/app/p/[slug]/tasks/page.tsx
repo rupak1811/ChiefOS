@@ -128,7 +128,7 @@ export default function ProjectTasksPage({ params }: PageProps) {
 
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">Tasks</h1>
@@ -145,7 +145,7 @@ export default function ProjectTasksPage({ params }: PageProps) {
       </Reveal>
 
       {tasks.length === 0 ? (
-        <Reveal delay={0.1}>
+        <Reveal immediate delay={0.1}>
           <GlassCard className="p-12 text-center">
             <ListTodo className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No tasks yet</h3>
@@ -168,7 +168,7 @@ export default function ProjectTasksPage({ params }: PageProps) {
             const Icon = column.icon;
 
             return (
-              <Reveal key={column.id} delay={0.1} index={statusColumns.indexOf(column)} stagger={80}>
+              <Reveal immediate key={column.id} delay={0.1} index={statusColumns.indexOf(column)} stagger={80}>
                 <GlassCard className="p-4">
                   <div className="flex items-center gap-2 mb-4">
                     <Icon className={`w-5 h-5 ${column.color}`} />

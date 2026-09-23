@@ -20,6 +20,7 @@ interface RevealProps {
   index?: number;
   className?: string;
   disableBlur?: boolean;
+  immediate?: boolean;
 }
 
 export default function Reveal({ 
@@ -29,6 +30,7 @@ export default function Reveal({
   index = 0,
   className = "",
   disableBlur = false,
+  immediate = false,
 }: RevealProps) {
   const prefersReducedMotion = useReducedMotion();
   
@@ -38,20 +40,21 @@ export default function Reveal({
     return <div className={className}>{children}</div>;
   }
 
+  const initialState = disableBlur
+    ? { opacity: 0, y: 20 }
+    : revealAnimation.initial;
+  
+  const animateState = disableBlur
+    ? { opacity: 1, y: 0 }
+    : revealAnimation.whileInView;
+
   return (
     <motion.div
       className={className}
-      initial={
-        disableBlur
-          ? { opacity: 0, y: 20 }
-          : revealAnimation.initial
-      }
-      whileInView={
-        disableBlur
-          ? { opacity: 1, y: 0 }
-          : revealAnimation.whileInView
-      }
-      viewport={revealAnimation.viewport}
+      initial={initialState}
+      animate={immediate ? animateState : undefined}
+      whileInView={immediate ? undefined : animateState}
+      viewport={immediate ? undefined : revealAnimation.viewport}
       transition={{
         ...revealAnimation.transition,
         delay: totalDelay,

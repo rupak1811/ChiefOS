@@ -295,7 +295,7 @@ export default function ChatPage() {
   // Thread list view
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">Chat</h1>
@@ -312,7 +312,7 @@ export default function ChatPage() {
       </Reveal>
 
       {threads.length === 0 ? (
-        <Reveal delay={0.1}>
+        <Reveal immediate delay={0.1}>
           <GlassCard className="p-12 text-center">
             <MessageSquare className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
             <h3 className="text-xl font-bold mb-2">No conversations yet</h3>
@@ -331,7 +331,7 @@ export default function ChatPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {threads.map((thread, i) => (
-            <Reveal key={thread.id} delay={0.1} index={i} stagger={80}>
+            <Reveal immediate key={thread.id} delay={0.1} index={i} stagger={80}>
               <div
                 onClick={() => setSelectedThread(thread.id)}
                 className="cursor-pointer hover:scale-[1.02] transition-transform"

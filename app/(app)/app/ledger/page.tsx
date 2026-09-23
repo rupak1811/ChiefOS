@@ -18,7 +18,7 @@ export default async function LedgerPage() {
 
   return (
     <div>
-      <Reveal>
+      <Reveal immediate>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Action Ledger</h1>
           <p className="text-foreground/70">
@@ -27,7 +27,7 @@ export default async function LedgerPage() {
         </div>
       </Reveal>
 
-      <Reveal delay={0.1}>
+      <Reveal immediate delay={0.1}>
         <GlassCard className="p-6 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -47,7 +47,7 @@ export default async function LedgerPage() {
 
       <div className="space-y-3">
         {entries.map((entry, index) => (
-          <Reveal key={entry.id} delay={0.2} index={index} stagger={60}>
+          <Reveal immediate key={entry.id} delay={0.2} index={index} stagger={60}>
             <GlassCard className="p-4">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
@@ -82,7 +82,7 @@ export default async function LedgerPage() {
         ))}
 
         {entries.length === 0 && (
-          <Reveal delay={0.2}>
+          <Reveal immediate delay={0.2}>
             <GlassCard className="p-12 text-center">
             <FileText className="w-12 h-12 mx-auto mb-4 text-foreground/30" />
             <p className="text-foreground/60">
