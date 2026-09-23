@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
+import { redirect, notFound } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
 import GlassCard from "@/components/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import { Users, Plus, Bot } from "lucide-react";
@@ -10,7 +10,7 @@ export default async function ProjectTeamsPage({ params }: { params: Promise<{ s
   const { slug } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return null;
+    redirect("/api/auth/signin");
   }
 
   const project = await prisma.project.findFirst({
