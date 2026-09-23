@@ -6,7 +6,6 @@ import GlassCard from "@/components/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import Link from "next/link";
 import { Bot, Users, MessageSquare, ListTodo, Plus, FolderKanban } from "lucide-react";
-import Button from "@/components/Button";
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -152,15 +151,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {/* Quick Actions */}
       <Reveal delay={0.2}>
-        <div className="flex gap-3 mb-8">
-          <Button href={`/app/p/${slug}/agents/new`}>
-            <Plus className="w-5 h-5 mr-2" />
-            New Agent
-          </Button>
-          <Button href={`/app/p/${slug}/chat`} variant="secondary">
-            <MessageSquare className="w-5 h-5 mr-2" />
-            Start Chat
-          </Button>
+        <div className="flex flex-wrap gap-3 mb-8">
+          <Link href={`/app/p/${slug}/agents/new`}>
+            <button className="px-6 h-11 rounded-xl bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center gap-2">
+              <Plus className="w-5 h-5" />
+              New Agent
+            </button>
+          </Link>
+          <Link href={`/app/p/${slug}/chat`}>
+            <button className="px-6 h-11 rounded-xl water-glass text-foreground hover:border-white/30 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center gap-2">
+              <MessageSquare className="w-5 h-5" />
+              Start Chat
+            </button>
+          </Link>
+          <Link href={`/app/p/${slug}/tasks`}>
+            <button className="px-6 h-11 rounded-xl water-glass text-foreground hover:border-white/30 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center gap-2">
+              <ListTodo className="w-5 h-5" />
+              New Task
+            </button>
+          </Link>
         </div>
       </Reveal>
 
@@ -182,9 +191,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 <Bot className="w-12 h-12 mx-auto mb-3 opacity-40" />
                 <p>No agents in this project yet</p>
                 <Link href={`/app/p/${slug}/agents/new`}>
-                  <Button className="mt-4" size="sm">
+                  <button className="mt-4 px-4 py-2 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg transition-all">
                     Create First Agent
-                  </Button>
+                  </button>
                 </Link>
               </div>
             ) : (

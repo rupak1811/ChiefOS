@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import GlassCard from "@/components/GlassCard";
 import Reveal from "@/components/motion/Reveal";
-import { MessageSquare, Plus, Bot, Send, ArrowLeft } from "lucide-react";
+import { MessageSquare, Plus, Bot } from "lucide-react";
 
 interface ChatThread {
   id: string;
@@ -17,26 +17,9 @@ interface ChatThread {
     title?: string | null;
     avatarColor: string;
   } | null;
-  project?: {
-    id: string;
-    name: string;
-    slug: string;
-  } | null;
   _count?: {
     messages: number;
   };
-}
-
-interface ChatMessage {
-  id: string;
-  role: string;
-  content: string;
-  createdAt: string;
-  agent?: {
-    id: string;
-    name: string;
-    avatarColor: string;
-  } | null;
 }
 
 interface Agent {
@@ -46,64 +29,50 @@ interface Agent {
   avatarColor: string;
 }
 
-export default function ChatPage() {
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default function ProjectChatPage({ params }: PageProps) {
   const router = useRouter();
+  const [slug, setSlug] = useState<string>("");
   const [threads, setThreads] = useState<ChatThread[]>([]);
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [selectedAgentId, setSelectedAgentId] = useState<string>("");
   const [creating, setCreating] = useState(false);
-  const [selectedThread, setSelectedThread] = useState<string | null>(null);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [message, setMessage] = useState("");
-  const [sending, setSending] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    params.then(({ slug: resolvedSlug }) => {
+      setSlug(resolvedSlug);
+      fetchData(resolvedSlug);
+    });
+  }, [params]);
 
-  useEffect(() => {
-    if (selectedThread) {
-      fetchThread(selectedThread);
-    }
-  }, [selectedThread]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const fetchData = async () => {
+  const fetchData = async (projectSlug: string) => {
     try {
-      const [threadsRes, agentsRes] = await Promise.all([
-        fetch("/api/chat/threads"),
+      const [projectsRes, agentsRes] = await Promise.all([
+        fetch("/api/projects"),
         fetch("/api/agents"),
       ]);
 
-      const threadsData = await threadsRes.json();
-      const agentsData = await agentsRes.json();
+      const projects = await projectsRes.json();
+      const project = projects.find((p: any) => p.slug === projectSlug);
 
-      setThreads(threadsData);
-      setAgents(agentsData);
+      if (project) {
+        const threadsRes = await fetch(`/api/chat/threads?projectId=${project.id}`);
+        const threadsData = await threadsRes.json();
+        setThreads(threadsData);
+
+        const agentsData = await agentsRes.json();
+        const projectAgents = agentsData.filter((a: any) => a.projectId === project.id);
+        setAgents(projectAgents);
+      }
     } catch (error) {
       console.error("Failed to fetch data:", error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchThread = async (id: string) => {
-    try {
-      const res = await fetch(`/api/chat/threads/${id}`);
-      const data = await res.json();
-      setMessages(data.messages || []);
-    } catch (error) {
-      console.error("Failed to fetch thread:", error);
     }
   };
 
@@ -115,55 +84,27 @@ export default function ChatPage() {
 
     setCreating(true);
     try {
+      const projectsRes = await fetch("/api/projects");
+      const projects = await projectsRes.json();
+      const project = projects.find((p: any) => p.slug === slug);
+
       const res = await fetch("/api/chat/threads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          projectId: project.id,
           agentId: selectedAgentId,
         }),
       });
 
       if (res.ok) {
         const thread = await res.json();
-        setThreads([thread, ...threads]);
-        setShowNewModal(false);
-        setSelectedAgentId("");
-        setSelectedThread(thread.id);
+        router.push(`/app/p/${slug}/chat/${thread.id}`);
       }
     } catch (error) {
       console.error("Failed to create thread:", error);
     } finally {
       setCreating(false);
-    }
-  };
-
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim() || sending || !selectedThread) return;
-
-    const userMessage = message;
-    setMessage("");
-    setSending(true);
-
-    try {
-      const res = await fetch(`/api/chat/threads/${selectedThread}/messages`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: userMessage }),
-      });
-
-      if (res.ok) {
-        const { userMessage: newUserMsg, agentMessage } = await res.json();
-        setMessages([
-          ...messages,
-          newUserMsg,
-          ...(agentMessage ? [agentMessage] : []),
-        ]);
-      }
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    } finally {
-      setSending(false);
     }
   };
 
@@ -175,126 +116,6 @@ export default function ChatPage() {
     );
   }
 
-  // Chat view - if thread selected
-  if (selectedThread) {
-    const thread = threads.find((t) => t.id === selectedThread);
-
-    return (
-      <div>
-        <div className="flex items-center gap-4 mb-6">
-          <button
-            onClick={() => setSelectedThread(null)}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          {thread?.agent ? (
-            <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold"
-                style={{ backgroundColor: thread.agent.avatarColor }}
-              >
-                {thread.agent.name.charAt(0)}
-              </div>
-              <div>
-                <h2 className="font-bold">{thread.agent.name}</h2>
-                {thread.agent.title && (
-                  <p className="text-sm text-accent-teal">{thread.agent.title}</p>
-                )}
-              </div>
-            </div>
-          ) : (
-            <h2 className="font-bold">Chat</h2>
-          )}
-        </div>
-
-        <div className="mb-4" style={{ height: "calc(100vh - 20rem)" }}>
-          <GlassCard className="p-6 h-full">
-          <div className="h-full overflow-y-auto">
-            <div className="space-y-4">
-              {messages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <Bot className="w-16 h-16 text-foreground/40 mb-4" />
-                  <p className="text-foreground/60">
-                    Start a conversation with {thread?.agent?.name || "your agent"}
-                  </p>
-                </div>
-              ) : (
-                messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}
-                  >
-                    {msg.role === "agent" && msg.agent && (
-                      <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                        style={{ backgroundColor: msg.agent.avatarColor }}
-                      >
-                        {msg.agent.name.charAt(0)}
-                      </div>
-                    )}
-                    <div
-                      className={`px-4 py-3 rounded-2xl max-w-[70%] ${
-                        msg.role === "user"
-                          ? "bg-gradient-to-r from-accent-teal to-accent-blue text-white"
-                          : "glass-morphism"
-                      }`}
-                    >
-                      <p className="whitespace-pre-wrap">{msg.content}</p>
-                      <p className="text-xs opacity-60 mt-1">
-                        {new Date(msg.createdAt).toLocaleTimeString()}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              )}
-              {sending && (
-                <div className="flex gap-3">
-                  {thread?.agent && (
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                      style={{ backgroundColor: thread.agent.avatarColor }}
-                    >
-                      {thread.agent.name.charAt(0)}
-                    </div>
-                  )}
-                  <div className="px-4 py-3 rounded-2xl glass-morphism">
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-accent-teal rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-accent-teal rounded-full animate-bounce" style={{ animationDelay: "0.1s" }} />
-                      <div className="w-2 h-2 bg-accent-teal rounded-full animate-bounce" style={{ animationDelay: "0.2s" }} />
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-          </GlassCard>
-        </div>
-
-        <form onSubmit={handleSend} className="flex gap-3">
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type your message..."
-            disabled={sending}
-            className="flex-1 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 focus:border-accent-teal focus:outline-none disabled:opacity-50"
-          />
-          <button
-            type="submit"
-            disabled={!message.trim() || sending}
-            className="px-6 h-14 rounded-2xl bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg hover:shadow-accent/25 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center gap-2"
-          >
-            <Send className="w-5 h-5" />
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  // Thread list view
   return (
     <div>
       <Reveal>
@@ -335,7 +156,7 @@ export default function ChatPage() {
           {threads.map((thread, i) => (
             <Reveal key={thread.id} delay={0.1} index={i} stagger={80}>
               <div
-                onClick={() => setSelectedThread(thread.id)}
+                onClick={() => router.push(`/app/p/${slug}/chat/${thread.id}`)}
                 className="cursor-pointer hover:scale-[1.02] transition-transform"
               >
                 <GlassCard className="p-6">
@@ -358,11 +179,6 @@ export default function ChatPage() {
                       </h3>
                       {thread.agent?.title && (
                         <p className="text-xs text-accent-teal">{thread.agent.title}</p>
-                      )}
-                      {thread.project && (
-                        <p className="text-xs text-foreground/60 mt-1">
-                          {thread.project.name}
-                        </p>
                       )}
                       <p className="text-xs text-foreground/60 mt-1">
                         {thread._count?.messages || 0} messages
@@ -392,10 +208,10 @@ export default function ChatPage() {
                 <div className="text-center py-6">
                   <Bot className="w-12 h-12 mx-auto mb-3 text-foreground/40" />
                   <p className="text-foreground/60 mb-4">
-                    No agents available yet
+                    No agents in this project yet
                   </p>
                   <button
-                    onClick={() => router.push("/app/agents/new")}
+                    onClick={() => router.push(`/app/p/${slug}/agents/new`)}
                     className="px-6 py-3 rounded-xl bg-gradient-to-r from-accent to-accent-hover text-[#070B14] hover:shadow-lg transition-all"
                   >
                     Create Agent First
