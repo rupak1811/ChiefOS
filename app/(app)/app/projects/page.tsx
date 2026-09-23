@@ -132,17 +132,10 @@ export default function ProjectsPage() {
 
       {projects.length === 0 ? (
         <Reveal immediate delay={0.1}>
-<<<<<<< HEAD
-          <GlassCard className="p-12 text-center" immediate>
-            <FolderKanban className="w-16 h-16 mx-auto mb-4 text-foreground/40" />
-            <h3 className="text-xl font-bold mb-2">No projects yet</h3>
-            <p className="text-foreground/60 mb-6">
-=======
-          <GlassCard className="p-8 sm:p-12 text-center">
+          <GlassCard className="p-8 sm:p-12 text-center" immediate>
             <FolderKanban className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 text-foreground/40" />
             <h3 className="text-lg sm:text-xl font-bold mb-2">No projects yet</h3>
             <p className="text-sm sm:text-base text-foreground/60 mb-4 sm:mb-6">
->>>>>>> e188526 (feat: Make ChiefOS fully responsive for mobile, tablet, and desktop)
               Create your first project to start organizing work with AI teammates
             </p>
             <Button onClick={() => setShowCreateModal(true)}>
@@ -159,13 +152,8 @@ export default function ProjectsPage() {
                 className="cursor-pointer hover:scale-[1.02] transition-transform"
                 onClick={() => router.push(`/app/p/${project.slug}`)}
               >
-<<<<<<< HEAD
-              <GlassCard className="p-6" immediate>
-                <div className="flex items-start justify-between mb-4">
-=======
-              <GlassCard className="p-4 sm:p-6">
+              <GlassCard className="p-4 sm:p-6" immediate>
                 <div className="flex items-start justify-between mb-3 sm:mb-4">
->>>>>>> e188526 (feat: Make ChiefOS fully responsive for mobile, tablet, and desktop)
                   <div
                     className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: project.color + "20" }}
@@ -220,17 +208,10 @@ export default function ProjectsPage() {
           className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => setShowCreateModal(false)}
         >
-<<<<<<< HEAD
-          <div onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-          <GlassCard className="p-8 max-w-lg w-full" immediate>
-            <h2 className="text-2xl font-bold mb-6">Create Project</h2>
-            <form onSubmit={handleCreate} className="space-y-4">
-=======
           <div onClick={(e: React.MouseEvent) => e.stopPropagation()} className="w-full max-w-lg max-h-[90vh] overflow-y-auto">
-          <GlassCard className="p-6 sm:p-8">
+          <GlassCard className="p-6 sm:p-8" immediate>
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Create Project</h2>
             <form onSubmit={handleCreate} className="space-y-3 sm:space-y-4">
->>>>>>> e188526 (feat: Make ChiefOS fully responsive for mobile, tablet, and desktop)
               <div>
                 <label className="block text-sm font-medium mb-2">Project Name</label>
                 <input
