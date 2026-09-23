@@ -53,7 +53,7 @@ export default function HomePage() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <section className="py-20 text-center">
+        <section className="py-12 sm:py-16 md:py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,14 +63,14 @@ export default function HomePage() {
                 : { duration: 0.8, ease: MOTION.easing.fluid }
             }
           >
-            <h1 className="font-display text-display mb-6 text-balance">
+            <h1 className="font-display text-display mb-4 sm:mb-6 text-balance px-2">
               Run a permissioned agent workforce from one{" "}
               <span className="text-grad-brand">glass</span> desk.
             </h1>
-            <p className="text-body text-ink-muted max-w-3xl mx-auto mb-8 text-balance">
+            <p className="text-body text-ink-muted max-w-3xl mx-auto mb-6 sm:mb-8 text-balance px-4">
               ChiefOS co-ordinates specialised agents under clear roles and approvals. You set the brief; they execute within the guardrails you define.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 px-4">
               <Button 
                 onClick={() => signIn("google", { callbackUrl: "/app" })} 
                 variant="primary" 
@@ -85,17 +85,17 @@ export default function HomePage() {
           </motion.div>
         </section>
 
-        <section className="py-12">
+        <section className="py-8 sm:py-12">
           <ImageCarousel />
         </section>
 
-        <section className="py-20">
+        <section className="py-12 sm:py-16 md:py-20">
           <Reveal>
-            <h2 className="font-display text-h2 text-center mb-12">
+            <h2 className="font-display text-h2 text-center mb-8 sm:mb-12 px-4">
               Why ChiefOS?
             </h2>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             <GlassCard hover shimmer>
               <div className="flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center mb-4">
@@ -134,16 +134,16 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             <Reveal>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 px-4 lg:px-0">
                 Custom agent desks
               </h2>
-              <p className="text-foreground/70 mb-8">
+              <p className="text-foreground/70 mb-6 sm:mb-8 px-4 lg:px-0">
                 Need a desk for a new workflow? We shape role, tools, and hand-offs so it fits your stack without noise.
               </p>
-              <ul className="space-y-4">
+              <ul className="space-y-3 sm:space-y-4 px-4 lg:px-0">
                 {[
                   "Approval queue for sensitive operations",
                   "Global kill switch for instant shutdown",
@@ -151,32 +151,32 @@ export default function HomePage() {
                   "Rule-based planning (no API keys required)",
                 ].map((feature, index) => (
                   <li key={index} className="flex items-start">
-                    <CheckCircle className="w-6 h-6 text-accent-teal mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">{feature}</span>
+                    <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-accent-teal mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm sm:text-base text-foreground/80">{feature}</span>
                   </li>
                 ))}
               </ul>
             </Reveal>
 
             <Reveal>
-              <GlassCard className="p-8">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                    <span className="text-sm text-foreground/70">Status</span>
-                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-lg text-sm">
+              <GlassCard className="p-4 sm:p-6 md:p-8">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-white/5 rounded-xl">
+                    <span className="text-xs sm:text-sm text-foreground/70">Status</span>
+                    <span className="px-2 sm:px-3 py-1 bg-green-500/20 text-green-400 rounded-lg text-xs sm:text-sm">
                       Active
                     </span>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                    <span className="text-sm text-foreground/70">Agents</span>
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-white/5 rounded-xl">
+                    <span className="text-xs sm:text-sm text-foreground/70">Agents</span>
                     <span className="font-mono text-accent-teal">4</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                    <span className="text-sm text-foreground/70">Actions Logged</span>
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-white/5 rounded-xl">
+                    <span className="text-xs sm:text-sm text-foreground/70">Actions Logged</span>
                     <span className="font-mono text-accent-blue">142</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                    <span className="text-sm text-foreground/70">Approvals Pending</span>
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-white/5 rounded-xl">
+                    <span className="text-xs sm:text-sm text-foreground/70">Approvals Pending</span>
                     <span className="font-mono text-yellow-400">0</span>
                   </div>
                 </div>
@@ -185,13 +185,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-20 text-center">
+        <section className="py-12 sm:py-16 md:py-20 text-center">
           <Reveal>
-            <div className="glass-morphism-light rounded-3xl p-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <div className="glass-morphism-light rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 mx-4 sm:mx-0">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
               Ready to get started?
             </h2>
-            <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/70 mb-6 sm:mb-8 max-w-2xl mx-auto">
               Sign in with Google to start co-ordinating your agent workforce with ChiefOS.
             </p>
             <Button 
